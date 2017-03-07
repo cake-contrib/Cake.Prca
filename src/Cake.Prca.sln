@@ -1,0 +1,87 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Prca", "Cake.Prca\Cake.Prca.csproj", "{20739F30-2C84-4132-9EE7-9AEBC8BC11B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Prca.Tests", "Cake.Prca.Tests\Cake.Prca.Tests.csproj", "{88CA9093-E7D4-413F-9163-72BAB80C15FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Prca.PullRequests.Tfs", "Cake.Prca.PullRequests.Tfs\Cake.Prca.PullRequests.Tfs.csproj", "{CBCD817B-76A3-45D3-9A1E-C6B52D5A54DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Prca.Issues.MsBuild", "Cake.Prca.Issues.MsBuild\Cake.Prca.Issues.MsBuild.csproj", "{85CDFEB5-4E7B-4FB3-8B1B-9257482C37B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Prca.PullRequests.Tfs.Tests", "Cake.Prca.PullRequests.Tfs.Tests\Cake.Prca.PullRequests.Tfs.Tests.csproj", "{BF9BD4CA-50D0-401F-A50B-917C6F73A111}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{C753D869-F62D-4019-A163-705E6E638B45}"
+	ProjectSection(SolutionItems) = preProject
+		..\build.ps1 = ..\build.ps1
+		..\build.sh = ..\build.sh
+		..\setup.cake = ..\setup.cake
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{E8487836-C7B7-4A78-89C0-442BC79C2FC7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Code Analysis Provider", "Code Analysis Provider", "{06095D04-A4CE-4EE1-BE54-E62039744482}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PullRequest Systems", "PullRequest Systems", "{CEBECB40-1AA5-448C-AF36-72BB2570614D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tfs", "Tfs", "{BD9D79C1-0024-406E-8EB5-A472EDCE0A35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MsBuild", "MsBuild", "{E6C88D7F-BB77-4D7A-AACD-7909C2AD9EAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuspec", "nuspec", "{1BA11301-3223-47C7-B6D3-FEC8C01091FE}"
+	ProjectSection(SolutionItems) = preProject
+		..\nuspec\nuget\Cake.Prca.Issues.MsBuild.nuspec = ..\nuspec\nuget\Cake.Prca.Issues.MsBuild.nuspec
+		..\nuspec\nuget\Cake.Prca.nuspec = ..\nuspec\nuget\Cake.Prca.nuspec
+		..\nuspec\nuget\Cake.Prca.PullRequests.Tfs.nuspec = ..\nuspec\nuget\Cake.Prca.PullRequests.Tfs.nuspec
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Prca.Issues.MsBuild.Tests", "Cake.Prca.Issues.MsBuild.Tests\Cake.Prca.Issues.MsBuild.Tests.csproj", "{4837E32B-59B3-4791-867F-CD8B23CA3FEA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20739F30-2C84-4132-9EE7-9AEBC8BC11B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20739F30-2C84-4132-9EE7-9AEBC8BC11B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20739F30-2C84-4132-9EE7-9AEBC8BC11B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20739F30-2C84-4132-9EE7-9AEBC8BC11B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88CA9093-E7D4-413F-9163-72BAB80C15FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88CA9093-E7D4-413F-9163-72BAB80C15FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88CA9093-E7D4-413F-9163-72BAB80C15FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88CA9093-E7D4-413F-9163-72BAB80C15FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBCD817B-76A3-45D3-9A1E-C6B52D5A54DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBCD817B-76A3-45D3-9A1E-C6B52D5A54DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBCD817B-76A3-45D3-9A1E-C6B52D5A54DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBCD817B-76A3-45D3-9A1E-C6B52D5A54DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85CDFEB5-4E7B-4FB3-8B1B-9257482C37B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85CDFEB5-4E7B-4FB3-8B1B-9257482C37B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85CDFEB5-4E7B-4FB3-8B1B-9257482C37B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85CDFEB5-4E7B-4FB3-8B1B-9257482C37B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF9BD4CA-50D0-401F-A50B-917C6F73A111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF9BD4CA-50D0-401F-A50B-917C6F73A111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF9BD4CA-50D0-401F-A50B-917C6F73A111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF9BD4CA-50D0-401F-A50B-917C6F73A111}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4837E32B-59B3-4791-867F-CD8B23CA3FEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4837E32B-59B3-4791-867F-CD8B23CA3FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4837E32B-59B3-4791-867F-CD8B23CA3FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4837E32B-59B3-4791-867F-CD8B23CA3FEA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{20739F30-2C84-4132-9EE7-9AEBC8BC11B8} = {E8487836-C7B7-4A78-89C0-442BC79C2FC7}
+		{88CA9093-E7D4-413F-9163-72BAB80C15FD} = {E8487836-C7B7-4A78-89C0-442BC79C2FC7}
+		{CBCD817B-76A3-45D3-9A1E-C6B52D5A54DF} = {BD9D79C1-0024-406E-8EB5-A472EDCE0A35}
+		{85CDFEB5-4E7B-4FB3-8B1B-9257482C37B8} = {E6C88D7F-BB77-4D7A-AACD-7909C2AD9EAE}
+		{BF9BD4CA-50D0-401F-A50B-917C6F73A111} = {BD9D79C1-0024-406E-8EB5-A472EDCE0A35}
+		{BD9D79C1-0024-406E-8EB5-A472EDCE0A35} = {CEBECB40-1AA5-448C-AF36-72BB2570614D}
+		{E6C88D7F-BB77-4D7A-AACD-7909C2AD9EAE} = {06095D04-A4CE-4EE1-BE54-E62039744482}
+		{1BA11301-3223-47C7-B6D3-FEC8C01091FE} = {C753D869-F62D-4019-A163-705E6E638B45}
+		{4837E32B-59B3-4791-867F-CD8B23CA3FEA} = {E6C88D7F-BB77-4D7A-AACD-7909C2AD9EAE}
+	EndGlobalSection
+EndGlobal
