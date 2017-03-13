@@ -1,5 +1,6 @@
 ﻿namespace Cake.Prca.Issues
 {
+    using System;
     using Core.IO;
 
     /// <summary>
@@ -7,19 +8,49 @@
     /// </summary>
     public class CodeAnalysisIssue : ICodeAnalysisIssue
     {
-        /// <inheritdoc/>
-        public FilePath AffectedFileRelativePath { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CodeAnalysisIssue"/> class.
+        /// </summary>
+        /// <param name="filePath">The path to the file affacted by the issue.
+        /// The path needs to be relative to the repository root.</param>
+        /// <param name="line">The line in the file where the issues has occurred.</param>
+        /// <param name="message">The message of the code analysis issue.</param>
+        /// <param name="priority">The priority of the message used to filter out issues if there are more issues than
+        /// should be posted.</param>
+        /// <param name="rule">The rule of the code analysis issue.</param>
+        public CodeAnalysisIssue(string filePath, int line, string message, int priority, string rule)
+        {
+            filePath.NotNullOrWhiteSpace(nameof(filePath));
+            line.NotNegativeOrZero(nameof(line));
+            message.NotNullOrWhiteSpace(nameof(message));
+
+            // File path needs to be relative to the repository root.
+            if (filePath.IsFullPath())
+            {
+                throw new ArgumentOutOfRangeException(nameof(filePath), "File path needs to be relative to the repository root.");
+            }
+
+            // Make sure path is normalized and starts with a leading \.
+            this.AffectedFileRelativePath = filePath.NormalizePath().EnsurePathStartsWithBackslash();
+            this.Line = line;
+            this.Message = message;
+            this.Priority = priority;
+            this.Rule = rule;
+        }
 
         /// <inheritdoc/>
-        public int Line { get; set; }
+        public FilePath AffectedFileRelativePath { get; }
 
         /// <inheritdoc/>
-        public string Message { get; set; }
+        public int Line { get; }
 
         /// <inheritdoc/>
-        public int Priority { get; set; }
+        public string Message { get; }
 
         /// <inheritdoc/>
-        public string Rule { get; set; }
+        public int Priority { get; }
+
+        /// <inheritdoc/>
+        public string Rule { get; }
     }
 }

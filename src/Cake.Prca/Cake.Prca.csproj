@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Cake.Prca.XML</DocumentationFile>
     <CodeAnalysisRuleSet>..\Cake.Prca.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cake.Core, Version=0.18.0.0, Culture=neutral, processorArchitecture=MSIL">

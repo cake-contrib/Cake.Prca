@@ -4,6 +4,147 @@
     using Shouldly;
     using Xunit;
 
+    public sealed class TheIsValidPathExtension
+    {
+        [Fact]
+        public void Should_Throw_If_Path_Is_Null()
+        {
+            // Given / When
+            var result = Record.Exception(() => ((string)null).IsValidPath());
+
+            // Then
+            result.IsArgumentNullException("path");
+        }
+
+        [Fact]
+        public void Should_Throw_If_Path_Is_Empty()
+        {
+            // Given / When
+            var result = Record.Exception(() => string.Empty.IsValidPath());
+
+            // Then
+            result.IsArgumentOutOfRangeException("path");
+        }
+
+        [Fact]
+        public void Should_Throw_If_Path_Is_WhiteSpace()
+        {
+            // Given / When
+            var result = Record.Exception(() => " ".IsValidPath());
+
+            // Then
+            result.IsArgumentOutOfRangeException("path");
+        }
+
+        [Theory]
+        [InlineData(@"foo")]
+        [InlineData(@"foo\")]
+        [InlineData(@"foo\bar")]
+        [InlineData(@"\foo")]
+        [InlineData(@"\foo\")]
+        [InlineData(@"\foo\bar")]
+        [InlineData(@"c:\foo")]
+        [InlineData(@"c:\foo\")]
+        [InlineData(@"c:\foo\bar")]
+        [InlineData(@"/foo")]
+        [InlineData(@"/foo")]
+        [InlineData(@"/foo/bar")]
+        public void Should_Return_True_If_Valid_Path(string path)
+        {
+            // Given / When
+            var result = path.IsValidPath();
+
+            // Then
+            result.ShouldBe(true);
+        }
+
+        [Theory]
+        [InlineData(@"foo<bar")]
+        public void Should_Return_False_If_Valid_Path(string path)
+        {
+            // Given / When
+            var result = path.IsValidPath();
+
+            // Then
+            result.ShouldBe(false);
+        }
+    }
+
+    public sealed class TheIsFullPathExtension
+    {
+        [Fact]
+        public void Should_Throw_If_Path_Is_Null()
+        {
+            // Given / When
+            var result = Record.Exception(() => ((string)null).IsFullPath());
+
+            // Then
+            result.IsArgumentNullException("path");
+        }
+
+        [Fact]
+        public void Should_Throw_If_Path_Is_Empty()
+        {
+            // Given / When
+            var result = Record.Exception(() => string.Empty.IsFullPath());
+
+            // Then
+            result.IsArgumentOutOfRangeException("path");
+        }
+
+        [Fact]
+        public void Should_Throw_If_Path_Is_WhiteSpace()
+        {
+            // Given / When
+            var result = Record.Exception(() => " ".IsFullPath());
+
+            // Then
+            result.IsArgumentOutOfRangeException("path");
+        }
+
+        [Fact]
+        public void Should_Throw_If_Path_Is_Not_Valid()
+        {
+            // Given / When
+            var result = Record.Exception(() => @"c:\foo<bar".IsFullPath());
+
+            // Then
+            result.IsArgumentException("path");
+        }
+
+        [Theory]
+        [InlineData(@"c:\foo")]
+        [InlineData(@"c:\foo\")]
+        [InlineData(@"c:\foo\bar")]
+        public void Should_Return_True_If_Full_Path(string path)
+        {
+            // Given / When
+            var result = path.IsFullPath();
+
+            // Then
+            result.ShouldBe(true);
+        }
+
+        [Theory]
+        [InlineData(@"foo")]
+        [InlineData(@"foo\")]
+        [InlineData(@"foo\bar")]
+        [InlineData(@"\foo")]
+        [InlineData(@"\foo\")]
+        [InlineData(@"\foo\bar")]
+        [InlineData(@"/foo")]
+        [InlineData(@"/foo")]
+        [InlineData(@"/foo/bar")]
+        public void Should_Return_False_If_Not_Full_Path(string path)
+        {
+            // Given / When
+            var result = path.IsFullPath();
+
+            // Then
+            result.ShouldBe(false);
+        }
+    }
+
     public sealed class TheIsSubPathOfExtension
     {
         [Fact]
@@ -37,13 +178,23 @@
         }
 
         [Fact]
+        public void Should_Throw_If_Path_Is_Invalid()
+        {
+            // Given / When
+            var result = Record.Exception(() => @"c:\foo<bar".IsSubpathOf(@"c:\foo"));
+
+            // Then
+            result.IsArgumentException("path");
+        }
+
+        [Fact]
         public void Should_Throw_If_BaseDirPath_Is_Null()
         {
             // Given / When
             var result = Record.Exception(() => @"c:\".IsSubpathOf(null));
 
             // Then
-            result.IsArgumentNullException("path");
+            result.IsArgumentNullException("baseDirPath");
         }
 
         [Fact]
@@ -53,7 +204,7 @@
             var result = Record.Exception(() => @"c:\".IsSubpathOf(string.Empty));
 
             // Then
-            result.IsArgumentOutOfRangeException("path");
+            result.IsArgumentOutOfRangeException("baseDirPath");
         }
 
         [Fact]
@@ -63,7 +214,17 @@
             var result = Record.Exception(() => @"c:\".IsSubpathOf(" "));
 
             // Then
-            result.IsArgumentOutOfRangeException("path");
+            result.IsArgumentOutOfRangeException("baseDirPath");
+        }
+
+        [Fact]
+        public void Should_Throw_If_BaseDirPath_Is_Invalid()
+        {
+            // Given / When
+            var result = Record.Exception(() => @"c:\foo\bar".IsSubpathOf(@"c:\f<o"));
+
+            // Then
+            result.IsArgumentException("baseDirPath");
         }
 
         [Theory]
@@ -148,6 +309,7 @@
             result.ShouldBe(expectedResult);
         }
     }
+
     public sealed class TheNormalizePathExtension
     {
         [Fact]
@@ -178,6 +340,16 @@
 
             // Then
             result.IsArgumentOutOfRangeException("path");
+        }
+
+        [Fact]
+        public void Should_Throw_If_Path_Is_Invalid()
+        {
+            // Given / When
+            var result = Record.Exception(() => @"c:\foo<bar".NormalizePath());
+
+            // Then
+            result.IsArgumentException("path");
         }
 
         [Theory]
@@ -211,6 +383,75 @@
         {
             // Given / When
             var result = path.NormalizePath();
+
+            // Then
+            result.ShouldBe(expectedResult);
+        }
+    }
+
+    public sealed class TheEnsurePathStartsWithBackslashExtension
+    {
+        [Fact]
+        public void Should_Throw_If_Path_Is_Null()
+        {
+            // Given / When
+            var result = Record.Exception(() => ((string)null).EnsurePathStartsWithBackslash());
+
+            // Then
+            result.IsArgumentNullException("path");
+        }
+
+        [Fact]
+        public void Should_Throw_If_Path_Is_Empty()
+        {
+            // Given / When
+            var result = Record.Exception(() => string.Empty.EnsurePathStartsWithBackslash());
+
+            // Then
+            result.IsArgumentOutOfRangeException("path");
+        }
+
+        [Fact]
+        public void Should_Throw_If_Path_Is_WhiteSpace()
+        {
+            // Given / When
+            var result = Record.Exception(() => " ".EnsurePathStartsWithBackslash());
+
+            // Then
+            result.IsArgumentOutOfRangeException("path");
+        }
+
+        [Fact]
+        public void Should_Throw_If_Path_Is_Invalid()
+        {
+            // Given / When
+            var result = Record.Exception(() => @"c:\foo<bar".EnsurePathStartsWithBackslash());
+
+            // Then
+            result.IsArgumentException("path");
+        }
+
+        [Theory]
+        [InlineData(@"foo", @"\foo")]
+        [InlineData(@"foo\", @"\foo\")]
+        [InlineData(@"foo\bar", @"\foo\bar")]
+        public void Should_Add_Leading_Slash_If_None_Exists(string path, string expectedResult)
+        {
+            // Given / When
+            var result = path.EnsurePathStartsWithBackslash();
+
+            // Then
+            result.ShouldBe(expectedResult);
+        }
+
+        [Theory]
+        [InlineData(@"\foo", @"\foo")]
+        [InlineData(@"\foo\", @"\foo\")]
+        [InlineData(@"\foo\bar", @"\foo\bar")]
+        public void Should_Not_Add_Leading_Slash_If_Already_Exists(string path, string expectedResult)
+        {
+            // Given / When
+            var result = path.EnsurePathStartsWithBackslash();
 
             // Then
             result.ShouldBe(expectedResult);

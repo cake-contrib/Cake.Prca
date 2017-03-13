@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<build started="10.03.2017 13:20:23">
-  <task name="Csc" file="c:\Source\Cake.Prca\src\Cake.Prca.CodeAnalysisProvider.MsBuild.Tests\Cake.Prca.CodeAnalysisProvider.MsBuild.Tests.csproj" started="10.03.2017 13:20:30">
-    <warning code="CS0219" file="MsBuildCodeAnalysisProviderTests.cs" line="13" column="17" started="10.03.2017 13:20:30"><![CDATA[The variable 'foo' is assigned but its value is never used]]></warning>
-  </task>
-</build>

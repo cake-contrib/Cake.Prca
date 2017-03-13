@@ -23,5 +23,7 @@
         {
             return this.issues;
         }
+
+        public new ICakeLog Log => base.Log;
     }
 }

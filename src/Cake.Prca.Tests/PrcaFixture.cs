@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Core.Diagnostics;
     using Prca.Issues;
-    using PullRequests;
+    using Prca.PullRequests;
     using Testing;
 
     public class PrcaFixture

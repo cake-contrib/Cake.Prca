@@ -4,12 +4,45 @@ namespace Cake.Prca.Issues
 {
     using System;
     using System.IO;
+    using System.Linq;
 
     /// <summary>
     /// Extensions for <see cref="string"/> for handling paths.
     /// </summary>
     public static class StringPathExtensions
     {
+        /// <summary>
+        /// Checks if a string containing a path is a valid path string.
+        /// </summary>
+        /// <param name="path">Path to check.</param>
+        /// <returns><c>True</c> if valid path.</returns>
+        public static bool IsValidPath(this string path)
+        {
+            path.NotNullOrWhiteSpace(nameof(path));
+
+            return path.IndexOfAny(Path.GetInvalidPathChars().ToArray()) == -1;
+        }
+
+        /// <summary>
+        /// Checks if a string containing a path is a full path.
+        /// </summary>
+        /// <param name="path">Path which should be checked</param>
+        /// <returns><c>True</c> if full path.</returns>
+        public static bool IsFullPath(this string path)
+        {
+            path.NotNullOrWhiteSpace(nameof(path));
+
+            if (!path.IsValidPath())
+            {
+                throw new ArgumentException("Invalid path", nameof(path));
+            }
+
+            // ReSharper disable once PossibleNullReferenceException
+            return
+                Path.IsPathRooted(path) &&
+                !Path.GetPathRoot(path).Equals(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal);
+        }
+
         /// <summary>
         /// Checks if a path is a sub path of another path.
         /// The comparison is case-insensitive, handles <c>/</c> and <c>\</c> slashes as folder separators and
@@ -22,12 +55,22 @@ namespace Cake.Prca.Issues
         public static bool IsSubpathOf(this string path, string baseDirPath)
         {
             path.NotNullOrWhiteSpace(nameof(path));
-            baseDirPath.NotNullOrWhiteSpace(nameof(path));
+            baseDirPath.NotNullOrWhiteSpace(nameof(baseDirPath));
 
-            string normalizedPath =
+            if (!path.IsValidPath())
+            {
+                throw new ArgumentException("Invalid path", nameof(path));
+            }
+
+            if (!baseDirPath.IsValidPath())
+            {
+                throw new ArgumentException("Invalid path", nameof(baseDirPath));
+            }
+
+            var normalizedPath =
                 Path.GetFullPath(path.NormalizePath().WithEnding("\\"));
 
-            string normalizedBaseDirPath =
+            var normalizedBaseDirPath =
                 Path.GetFullPath(baseDirPath.NormalizePath().WithEnding("\\"));
 
             return normalizedPath.StartsWith(normalizedBaseDirPath, StringComparison.OrdinalIgnoreCase);
@@ -43,7 +86,34 @@ namespace Cake.Prca.Issues
         {
             path.NotNullOrWhiteSpace(nameof(path));
 
+            if (!path.IsValidPath())
+            {
+                throw new ArgumentException("Invalid path", nameof(path));
+            }
+
             return path.Replace('/', '\\');
+        }
+
+        /// <summary>
+        /// Ensures that a path starts with a leading <c>\</c>.
+        /// </summary>
+        /// <param name="path">Path string to check.</param>
+        /// <returns>Path with leading <c>\</c>.</returns>
+        public static string EnsurePathStartsWithBackslash(this string path)
+        {
+            path.NotNullOrWhiteSpace(nameof(path));
+
+            if (!path.IsValidPath())
+            {
+                throw new ArgumentException("Invalid path", nameof(path));
+            }
+
+            if (!path.StartsWith("\\"))
+            {
+                return "\\" + path;
+            }
+
+            return path;
         }
 
         /// <summary>

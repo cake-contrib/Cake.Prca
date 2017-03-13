@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using Prca.Issues;
-    using PullRequests;
+    using Prca.PullRequests;
     using Xunit;
 
     public class IssueFiltererTests

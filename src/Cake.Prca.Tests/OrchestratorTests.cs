@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Core.IO;
     using Prca.Issues;
-    using PullRequests;
+    using Prca.PullRequests;
     using Shouldly;
     using Xunit;
 
@@ -80,22 +80,20 @@
                         fixture.Log,
                         new List<ICodeAnalysisIssue>
                         {
-                            new CodeAnalysisIssue()
-                            {
-                                AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
-                                Line = 10,
-                                Message = "Foo",
-                                Priority = 0,
-                                Rule = "Foo"
-                            },
-                            new CodeAnalysisIssue()
-                            {
-                                AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
-                                Line = 12,
-                                Message = "Bar",
-                                Priority = 0,
-                                Rule = "Bar"
-                            }
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                10,
+                                "Foo",
+                                0,
+                                "Foo"
+                            ),
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                12,
+                                "Bar",
+                                0,
+                                "Bar"
+                            )
                         });
 
                 // When
@@ -115,22 +113,20 @@
                         fixture.Log,
                         new List<ICodeAnalysisIssue>
                         {
-                            new CodeAnalysisIssue()
-                            {
-                                AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
-                                Line = 10,
-                                Message = "Foo",
-                                Priority = 0,
-                                Rule = "Foo"
-                            },
-                            new CodeAnalysisIssue()
-                            {
-                                AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\NotModified.cs"),
-                                Line = 12,
-                                Message = "Bar",
-                                Priority = 0,
-                                Rule = "Bar"
-                            }
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                10,
+                                "Foo",
+                                0,
+                                "Foo"
+                            ),
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\NotModified.cs",
+                                12,
+                                "Bar",
+                                0,
+                                "Bar"
+                            )
                         });
                 fixture.PullRequestSystem =
                     new FakePullRequestSystem(
@@ -159,22 +155,20 @@
                         fixture.Log,
                         new List<ICodeAnalysisIssue>
                         {
-                            new CodeAnalysisIssue()
-                            {
-                                AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
-                                Line = 10,
-                                Message = "Foo",
-                                Priority = 0,
-                                Rule = "Foo"
-                            },
-                            new CodeAnalysisIssue()
-                            {
-                                AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
-                                Line = 12,
-                                Message = "Bar",
-                                Priority = 0,
-                                Rule = "Bar"
-                            }
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                10,
+                                "Foo",
+                                0,
+                                "Foo"
+                            ),
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                12,
+                                "Bar",
+                                0,
+                                "Bar"
+                            )
                         });
                 fixture.PullRequestSystem =
                     new FakePullRequestSystem(
@@ -221,14 +215,13 @@
                         fixture.Log,
                         new List<ICodeAnalysisIssue>
                         {
-                            new CodeAnalysisIssue()
-                            {
-                                AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
-                                Line = 10,
-                                Message = "Foo",
-                                Priority = 0,
-                                Rule = "Foo"
-                            }
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                10,
+                                "Foo",
+                                0,
+                                "Foo"
+                            )
                         });
                 fixture.PullRequestSystem =
                     new FakePullRequestSystem(
@@ -274,22 +267,20 @@
                         fixture.Log,
                         new List<ICodeAnalysisIssue>
                         {
-                            new CodeAnalysisIssue()
-                            {
-                                AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
-                                Line = 10,
-                                Message = "Foo",
-                                Priority = 0,
-                                Rule = "Foo"
-                            },
-                            new CodeAnalysisIssue()
-                            {
-                                AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
-                                Line = 12,
-                                Message = "Bar",
-                                Priority = 0,
-                                Rule = "Bar"
-                            }
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                10,
+                                "Foo",
+                                0,
+                                "Foo"
+                            ),
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                12,
+                                "Bar",
+                                0,
+                                "Bar"
+                            )
                         });
                 fixture.PullRequestSystem =
                     new FakePullRequestSystem(
@@ -319,22 +310,20 @@
                         fixture.Log,
                         new List<ICodeAnalysisIssue>
                         {
-                            new CodeAnalysisIssue()
-                            {
-                                AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
-                                Line = 10,
-                                Message = "Foo",
-                                Priority = 0,
-                                Rule = "Foo"
-                            },
-                            new CodeAnalysisIssue()
-                            {
-                                AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\NotModified.cs"),
-                                Line = 12,
-                                Message = "Bar",
-                                Priority = 0,
-                                Rule = "Bar"
-                            }
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                10,
+                                "Foo",
+                                0,
+                                "Foo"
+                            ),
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\NotModified.cs",
+                                12,
+                                "Bar",
+                                0,
+                                "Bar"
+                            )
                         });
                 fixture.PullRequestSystem =
                     new FakePullRequestSystem(
@@ -359,14 +348,13 @@
                         fixture.Log,
                         new List<ICodeAnalysisIssue>
                         {
-                            new CodeAnalysisIssue()
-                            {
-                                AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
-                                Line = 10,
-                                Message = "Foo",
-                                Priority = 0,
-                                Rule = "Foo"
-                            }
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                10,
+                                "Foo",
+                                0,
+                                "Foo"
+                            )
                         });
                 var threadToResolve =
                     new PrcaDiscussionThread(
@@ -410,14 +398,13 @@
                 // Given
                 var fixture = new PrcaFixture();
                 var issueToPost =
-                    new CodeAnalysisIssue()
-                    {
-                        AffectedFileRelativePath = new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
-                        Line = 10,
-                        Message = "Foo",
-                        Priority = 0,
-                        Rule = "Foo"
-                    };
+                    new CodeAnalysisIssue(
+                        @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                        10,
+                        "Foo",
+                        0,
+                        "Foo"
+                    );
 
                 fixture.CodeAnalysisProvider =
                     new FakeCodeAnalysisProvider(

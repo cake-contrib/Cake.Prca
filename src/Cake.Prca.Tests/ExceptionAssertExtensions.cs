@@ -5,6 +5,12 @@
 
     public static class ExceptionAssertExtensions
     {
+        public static void IsArgumentException(this Exception exception, string parameterName)
+        {
+            Assert.IsType<ArgumentException>(exception);
+            Assert.Equal(parameterName, ((ArgumentException)exception).ParamName);
+        }
+
         public static void IsArgumentNullException(this Exception exception, string parameterName)
         {
             Assert.IsType<ArgumentNullException>(exception);

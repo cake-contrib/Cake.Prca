@@ -4,7 +4,7 @@
     using Core.Diagnostics;
     using Core.IO;
     using Prca.Issues;
-    using PullRequests;
+    using Prca.PullRequests;
 
     public class FakePullRequestSystem : PullRequestSystem
     {
@@ -54,5 +54,7 @@
         {
             this.postedIssues.AddRange(issues);
         }
+
+        public new ICakeLog Log => base.Log;
     }
 }
