@@ -1,7 +1,5 @@
 ﻿namespace Cake.Prca.Tests
 {
-    using Shouldly;
-    using Testing;
     using Xunit;
 
     public sealed class PrcaArgumentChecksTests

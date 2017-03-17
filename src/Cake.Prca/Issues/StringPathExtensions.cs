@@ -67,6 +67,7 @@ namespace Cake.Prca.Issues
                 throw new ArgumentException("Invalid path", nameof(baseDirPath));
             }
 
+            // TODO There are edge cases where GetFullPath can lead to wrong results. See https://github.com/cake-contrib/Cake.Prca/pull/2#discussion_r106646030
             var normalizedPath =
                 Path.GetFullPath(path.NormalizePath().WithEnding("\\"));
 

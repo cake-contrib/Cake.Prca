@@ -51,23 +51,9 @@
         public void Run()
         {
             var issues = this.codeAnalysisProvider.ReadIssues().ToList();
-
-            this.ValidateIssues(issues);
             this.log.Information("Processing {0} new issues", issues.Count);
 
             this.PostAndResolveComments(issues);
-        }
-
-        /// <summary>
-        /// Validate issues if they can be processed.
-        /// </summary>
-        /// <param name="issues">Issues to validate.</param>
-        private void ValidateIssues(
-            IEnumerable<ICodeAnalysisIssue> issues)
-        {
-            issues.NotNull(nameof(issues));
-
-            // TODO
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
     using System.Diagnostics;
     using System.Linq;
     using Core.Diagnostics;
+    using Core.IO;
     using Issues;
     using PullRequests;
 
@@ -79,6 +80,19 @@
         }
 
         /// <summary>
+        /// Validate the list of modified files in the pull request.
+        /// </summary>
+        /// <param name="modifiedFilePaths">List of modified files in the pull request.</param>
+        private static void ValidateModifiedFiles(IEnumerable<FilePath> modifiedFilePaths)
+        {
+            foreach (var filePath in modifiedFilePaths.Where(x => !x.IsRelative))
+            {
+                throw new PrcaException(
+                    $"Absolute file paths are not suported for modified files. Path: {filePath}");
+            }
+        }
+
+        /// <summary>
         /// Filters all issues affecting files which do not belong to files changed in this pull request.
         /// </summary>
         /// <param name="issues">List of issues which should be filtered.</param>
@@ -90,19 +104,22 @@
                 return issues;
             }
 
-            var modifiedFilesInPullRequest =
-                new HashSet<string>(this.pullRequestSystem.GetModifiedFilesInPullRequest().Select(x => x.ToString()));
+            var modifiedFilesList = this.pullRequestSystem.GetModifiedFilesInPullRequest().ToList();
+            ValidateModifiedFiles(modifiedFilesList);
+
+            var modifiedFilesHashSet =
+                new HashSet<string>(modifiedFilesList.Select(x => x.ToString()));
             this.log.Verbose(
                 "Files changed in this pull request:\n{0}",
                 string.Join(
                     Environment.NewLine,
-                    modifiedFilesInPullRequest.Select(x => "  " + x)));
+                    modifiedFilesHashSet.Select(x => "  " + x)));
 
             // TODO Comparing by string can lead to wrong results if eg. ".." is used in the path. Better would be to compare full path, but for resolving this we need to have the repo root here.
             var countBefore = issues.Count;
             var result =
                 issues
-                    .Where(issue => modifiedFilesInPullRequest.Contains(issue.AffectedFileRelativePath.ToString()))
+                    .Where(issue => modifiedFilesHashSet.Contains(issue.AffectedFileRelativePath.ToString()))
                     .ToList();
             var commentsFiltered = countBefore - result.Count;
 
