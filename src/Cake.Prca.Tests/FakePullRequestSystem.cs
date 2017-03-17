@@ -24,10 +24,14 @@
             IEnumerable<FilePath> modifiedFiles)
             : base(log)
         {
+            // ReSharper disable once PossibleMultipleEnumeration
             discussionThreads.NotNull(nameof(discussionThreads));
+            // ReSharper disable once PossibleMultipleEnumeration
             modifiedFiles.NotNull(nameof(modifiedFiles));
 
+            // ReSharper disable once PossibleMultipleEnumeration
             this.discussionThreads.AddRange(discussionThreads);
+            // ReSharper disable once PossibleMultipleEnumeration
             this.modifiedFiles.AddRange(modifiedFiles);
         }
 
@@ -47,11 +51,17 @@
 
         public override void MarkThreadAsFixed(IPrcaDiscussionThread thread)
         {
+            thread.NotNull(nameof(thread));
+
             this.threadsMarkedAsFixed.Add(thread);
         }
 
         public override void PostDiscussionThreads(IEnumerable<ICodeAnalysisIssue> issues, string commentSource)
         {
+            // ReSharper disable once PossibleMultipleEnumeration
+            issues.NotNull(nameof(issues));
+
+            // ReSharper disable once PossibleMultipleEnumeration
             this.postedIssues.AddRange(issues);
         }
 

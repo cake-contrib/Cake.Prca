@@ -90,7 +90,8 @@
                 return issues;
             }
 
-            var modifiedFilesInPullRequest = this.pullRequestSystem.GetModifiedFilesInPullRequest().ToList();
+            var modifiedFilesInPullRequest =
+                new HashSet<string>(this.pullRequestSystem.GetModifiedFilesInPullRequest().Select(x => x.ToString()));
             this.log.Verbose(
                 "Files changed in this pull request:\n{0}",
                 string.Join(
@@ -100,7 +101,7 @@
             var countBefore = issues.Count;
             var result =
                 issues
-                    .Where(issue => modifiedFilesInPullRequest.Select(x => x.ToString()).Contains(issue.AffectedFileRelativePath.ToString()))
+                    .Where(issue => modifiedFilesInPullRequest.Contains(issue.AffectedFileRelativePath.ToString()))
                     .ToList();
             var commentsFiltered = countBefore - result.Count;
 
@@ -113,16 +114,9 @@
 
         /// <summary>
         /// Filters issues for which already a comment exists.
-        /// Issues are filtered if the they fulfill all of the following conditions:
-        /// * A comment with the same content exists
-        /// * The comment belongs to the same file
-        /// * The thread was created by the same logic, i.e. the same <code>commentSource</code>
         /// </summary>
-        /// <remarks>
-        /// The line cannot be used since comments can move arround.
-        /// </remarks>
         /// <param name="issues">List of issues which should be filtered.</param>
-        /// <param name="issueComments">List of existing comments on the pull request.</param>
+        /// <param name="issueComments">List of issues and their existing matching comments on the pull request.</param>
         /// <returns>List issues filtered to only the ones not having already a comment.</returns>
         private IList<ICodeAnalysisIssue> FilterPreExistingComments(
             IList<ICodeAnalysisIssue> issues,
@@ -164,7 +158,7 @@
             }
 
             var countBefore = issues.Count;
-            var result = issues.OrderBy(x => x.Priority).Take(this.settings.MaxIssuesToPost).ToList();
+            var result = issues.OrderByDescending(x => x.Priority).Take(this.settings.MaxIssuesToPost).ToList();
             var commentsFiltered = countBefore - result.Count;
 
             this.log.Information(

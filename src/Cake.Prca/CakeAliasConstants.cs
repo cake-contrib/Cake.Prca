@@ -11,12 +11,12 @@
         public const string MainCakeAliasCategory = "Pull Request Code Analysis";
 
         /// <summary>
-        /// Category to use on for all Cake aliases creating pull request systems.
+        /// Category to use for all Cake aliases creating pull request systems.
         /// </summary>
         public const string PullRequestSystemCakeAliasCategory = "Pull Request System";
 
         /// <summary>
-        /// Category to use on for all Cake aliases creating code analysis providers.
+        /// Category to use for all Cake aliases creating code analysis providers.
         /// </summary>
         public const string CodeAnalysisProviderCakeAliasCategory = "Code Analysis Provider";
     }

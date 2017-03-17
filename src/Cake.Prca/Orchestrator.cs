@@ -109,6 +109,7 @@
                             issue.Rule,
                             issue.Line,
                             issue.AffectedFileRelativePath);
+
                 this.log.Verbose(
                     "Posting {0} issue(s):\n{1}",
                     remainingIssues.Count,
@@ -123,11 +124,11 @@
         }
 
         /// <summary>
-        /// Returns active comments for a list of issues.
+        /// Returns existing matching comments from the pull request for a list of issues.
         /// </summary>
         /// <param name="issues">Issues for which matching comments should be found.</param>
-        /// <param name="existingThreads">Existing discussion threads.</param>
-        /// <returns>Dictionary containing issues and its associated comments.</returns>
+        /// <param name="existingThreads">Existing discussion threads on the pull request.</param>
+        /// <returns>Dictionary containing issues and its associated matching comments on the pull request.</returns>
         private IDictionary<ICodeAnalysisIssue, IEnumerable<IPrcaDiscussionComment>> BuildIssueToCommentDictonary(
             IList<ICodeAnalysisIssue> issues,
             IList<IPrcaDiscussionThread> existingThreads)
@@ -155,10 +156,18 @@
         }
 
         /// <summary>
-        /// Retuns all comments from discussion threads which are active, for the file affected by an issue.
+        /// Returns all matching comments from discussion threads for an issue.
+        /// Comments are considered matching if they fulfill all of the following conditions:
+        /// * The thread is active.
+        /// * The thread is for the same file.
+        /// * The thread was created by the same logic, i.e. the same <code>commentSource</code>.
+        /// * The comment contains the same content.
         /// </summary>
+        /// <remarks>
+        /// The line cannot be used since comments can move around.
+        /// </remarks>
         /// <param name="issue">Issue for which the comments should be returned.</param>
-        /// <param name="existingThreads">Existing discussion threads.</param>
+        /// <param name="existingThreads">Existing discussion threads on the pull request.</param>
         /// <returns>Active comments for the issue.</returns>
         private IEnumerable<IPrcaDiscussionComment> GetMatchingComments(
             ICodeAnalysisIssue issue,
@@ -255,7 +264,7 @@
             existingThreads.NotNull(nameof(existingThreads));
             issueComments.NotNull(nameof(issueComments));
 
-            var currentComments = issueComments.Values.SelectMany(x => x);
+            var currentComments = new HashSet<IPrcaDiscussionComment>(issueComments.Values.SelectMany(x => x));
 
             var result =
                 existingThreads.Where(thread => !thread.Comments.Any(x => currentComments.Contains(x))).ToList();

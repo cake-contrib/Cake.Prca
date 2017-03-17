@@ -128,6 +128,7 @@
                                 "Bar"
                             )
                         });
+
                 fixture.PullRequestSystem =
                     new FakePullRequestSystem(
                         fixture.Log,
@@ -170,6 +171,7 @@
                                 "Bar"
                             )
                         });
+
                 fixture.PullRequestSystem =
                     new FakePullRequestSystem(
                         fixture.Log,
@@ -223,6 +225,7 @@
                                 "Foo"
                             )
                         });
+
                 fixture.PullRequestSystem =
                     new FakePullRequestSystem(
                         fixture.Log,
@@ -282,6 +285,7 @@
                                 "Bar"
                             )
                         });
+
                 fixture.PullRequestSystem =
                     new FakePullRequestSystem(
                         fixture.Log,
@@ -290,6 +294,7 @@
                         {
                             new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
                         });
+
                 fixture.Settings.MaxIssuesToPost = 1;
 
                 // When
@@ -325,6 +330,7 @@
                                 "Bar"
                             )
                         });
+
                 fixture.PullRequestSystem =
                     new FakePullRequestSystem(
                         fixture.Log,
@@ -342,20 +348,6 @@
             public void Should_Resolve_Closed_Issues()
             {
                 // Given
-                var fixture = new PrcaFixture();
-                fixture.CodeAnalysisProvider =
-                    new FakeCodeAnalysisProvider(
-                        fixture.Log,
-                        new List<ICodeAnalysisIssue>
-                        {
-                            new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
-                                10,
-                                "Foo",
-                                0,
-                                "Foo"
-                            )
-                        });
                 var threadToResolve =
                     new PrcaDiscussionThread(
                         1,
@@ -372,6 +364,22 @@
                     {
                         CommentSource = null
                     };
+
+                var fixture = new PrcaFixture();
+                fixture.CodeAnalysisProvider =
+                    new FakeCodeAnalysisProvider(
+                        fixture.Log,
+                        new List<ICodeAnalysisIssue>
+                        {
+                            new CodeAnalysisIssue(
+                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                10,
+                                "Foo",
+                                0,
+                                "Foo"
+                            )
+                        });
+
                 fixture.PullRequestSystem =
                     new FakePullRequestSystem(
                         fixture.Log,
@@ -396,7 +404,6 @@
             public void Should_Post_Issue()
             {
                 // Given
-                var fixture = new PrcaFixture();
                 var issueToPost =
                     new CodeAnalysisIssue(
                         @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
@@ -406,6 +413,7 @@
                         "Foo"
                     );
 
+                var fixture = new PrcaFixture();
                 fixture.CodeAnalysisProvider =
                     new FakeCodeAnalysisProvider(
                         fixture.Log,
@@ -413,6 +421,7 @@
                         {
                             issueToPost
                         });
+
                 fixture.PullRequestSystem =
                     new FakePullRequestSystem(
                         fixture.Log,

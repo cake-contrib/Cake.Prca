@@ -14,8 +14,12 @@
         }
 
         public FakeCodeAnalysisProvider(ICakeLog log, IEnumerable<ICodeAnalysisIssue> issues)
-            : base (log)
+            : base(log)
         {
+            // ReSharper disable once PossibleMultipleEnumeration
+            issues.NotNull(nameof(issues));
+
+            // ReSharper disable once PossibleMultipleEnumeration
             this.issues.AddRange(issues);
         }
 

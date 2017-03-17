@@ -15,8 +15,9 @@
 
         /// <summary>
         /// Gets the line in the file where the issues has occurred.
+        /// Nothing if the issue affects the whole file or an asssembly.
         /// </summary>
-        int Line { get; }
+        int? Line { get; }
 
         /// <summary>
         /// Gets the message of the code analysis issue.
@@ -25,6 +26,7 @@
 
         /// <summary>
         /// Gets the priority of the message used to filter out issues if there are more issues than should be posted.
+        /// Issues with a lower priority are filtered if there are more issues to post than is allowed.
         /// </summary>
         int Priority { get; }
 
