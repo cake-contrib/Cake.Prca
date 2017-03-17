@@ -1,6 +1,6 @@
 # Cake Pull Request Code Analysis Addin
 
-This Addin for the Cake Build Automation System allows you to write issue found using any code analyzer or linter as comments to pull requests.
+This Addin for the Cake Build Automation System allows you to write issues found using any code analyzer or linter as comments to pull requests.
 More about Cake at http://cakebuild.net
 
 [![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/cake-contrib/Cake.Prca/blob/feature/build/LICENSE)
@@ -48,3 +48,4 @@ On OSX/Linux run:
 ./build.sh
 ```
 
+[BBT Software AG]: https://github.com/BBTSoftwareAG
