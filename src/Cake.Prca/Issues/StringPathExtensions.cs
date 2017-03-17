@@ -95,28 +95,6 @@ namespace Cake.Prca.Issues
         }
 
         /// <summary>
-        /// Ensures that a path starts with a leading <c>\</c>.
-        /// </summary>
-        /// <param name="path">Path string to check.</param>
-        /// <returns>Path with leading <c>\</c>.</returns>
-        public static string EnsurePathStartsWithBackslash(this string path)
-        {
-            path.NotNullOrWhiteSpace(nameof(path));
-
-            if (!path.IsValidPath())
-            {
-                throw new ArgumentException("Invalid path", nameof(path));
-            }
-
-            if (!path.StartsWith("\\"))
-            {
-                return "\\" + path;
-            }
-
-            return path;
-        }
-
-        /// <summary>
         /// Returns <paramref name="value"/> with the minimal concatenation of <paramref name="ending"/> (starting from end) that
         /// results in satisfying .EndsWith(ending).
         /// </summary>

@@ -27,13 +27,12 @@
             rule.NotNull(nameof(rule));
 
             // File path needs to be relative to the repository root.
-            if (filePath.IsFullPath())
+            this.AffectedFileRelativePath = filePath;
+            if (!this.AffectedFileRelativePath.IsRelative)
             {
                 throw new ArgumentOutOfRangeException(nameof(filePath), "File path needs to be relative to the repository root.");
             }
 
-            // Make sure path is normalized and starts with a leading \.
-            this.AffectedFileRelativePath = filePath.NormalizePath().EnsurePathStartsWithBackslash();
             this.Line = line;
             this.Message = message;
             this.Priority = priority;

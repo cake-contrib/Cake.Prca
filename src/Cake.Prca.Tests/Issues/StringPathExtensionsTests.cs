@@ -308,6 +308,19 @@
             // Then
             result.ShouldBe(expectedResult);
         }
+
+        [Theory]
+        [InlineData(@"foo\bar", @"foo", true)]
+        [InlineData(@"..\foo\bar", @"..\foo", true)]
+        [InlineData(@"foo\bar", @"\foo", false)]
+        public void Should_Work_With_RelativePaths(string path, string baseDir, bool expectedResult)
+        {
+            // Given / When
+            var result = path.IsSubpathOf(baseDir);
+
+            // Then
+            result.ShouldBe(expectedResult);
+        }
     }
 
     public sealed class TheNormalizePathExtension
@@ -383,75 +396,6 @@
         {
             // Given / When
             var result = path.NormalizePath();
-
-            // Then
-            result.ShouldBe(expectedResult);
-        }
-    }
-
-    public sealed class TheEnsurePathStartsWithBackslashExtension
-    {
-        [Fact]
-        public void Should_Throw_If_Path_Is_Null()
-        {
-            // Given / When
-            var result = Record.Exception(() => ((string)null).EnsurePathStartsWithBackslash());
-
-            // Then
-            result.IsArgumentNullException("path");
-        }
-
-        [Fact]
-        public void Should_Throw_If_Path_Is_Empty()
-        {
-            // Given / When
-            var result = Record.Exception(() => string.Empty.EnsurePathStartsWithBackslash());
-
-            // Then
-            result.IsArgumentOutOfRangeException("path");
-        }
-
-        [Fact]
-        public void Should_Throw_If_Path_Is_WhiteSpace()
-        {
-            // Given / When
-            var result = Record.Exception(() => " ".EnsurePathStartsWithBackslash());
-
-            // Then
-            result.IsArgumentOutOfRangeException("path");
-        }
-
-        [Fact]
-        public void Should_Throw_If_Path_Is_Invalid()
-        {
-            // Given / When
-            var result = Record.Exception(() => @"c:\foo<bar".EnsurePathStartsWithBackslash());
-
-            // Then
-            result.IsArgumentException("path");
-        }
-
-        [Theory]
-        [InlineData(@"foo", @"\foo")]
-        [InlineData(@"foo\", @"\foo\")]
-        [InlineData(@"foo\bar", @"\foo\bar")]
-        public void Should_Add_Leading_Slash_If_None_Exists(string path, string expectedResult)
-        {
-            // Given / When
-            var result = path.EnsurePathStartsWithBackslash();
-
-            // Then
-            result.ShouldBe(expectedResult);
-        }
-
-        [Theory]
-        [InlineData(@"\foo", @"\foo")]
-        [InlineData(@"\foo\", @"\foo\")]
-        [InlineData(@"\foo\bar", @"\foo\bar")]
-        public void Should_Not_Add_Leading_Slash_If_Already_Exists(string path, string expectedResult)
-        {
-            // Given / When
-            var result = path.EnsurePathStartsWithBackslash();
 
             // Then
             result.ShouldBe(expectedResult);

@@ -98,6 +98,7 @@
                     Environment.NewLine,
                     modifiedFilesInPullRequest.Select(x => "  " + x)));
 
+            // TODO Comparing by string can lead to wrong results if eg. ".." is used in the path. Better would be to compare full path, but for resolving this we need to have the repo root here.
             var countBefore = issues.Count;
             var result =
                 issues

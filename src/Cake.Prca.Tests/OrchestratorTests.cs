@@ -81,14 +81,14 @@
                         new List<ICodeAnalysisIssue>
                         {
                             new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 10,
                                 "Foo",
                                 0,
                                 "Foo"
                             ),
                             new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
@@ -114,14 +114,14 @@
                         new List<ICodeAnalysisIssue>
                         {
                             new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 10,
                                 "Foo",
                                 0,
                                 "Foo"
                             ),
                             new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\NotModified.cs",
+                                @"src\Cake.Prca.Tests\NotModified.cs",
                                 12,
                                 "Bar",
                                 0,
@@ -135,7 +135,7 @@
                         new List<IPrcaDiscussionThread>(),
                         new List<FilePath>
                         {
-                            new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
+                            new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
                         });
 
                 // When
@@ -157,14 +157,14 @@
                         new List<ICodeAnalysisIssue>
                         {
                             new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 10,
                                 "Foo",
                                 0,
                                 "Foo"
                             ),
                             new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
@@ -180,7 +180,7 @@
                             new PrcaDiscussionThread(
                                 1,
                                 PrcaDiscussionStatus.Active,
-                                new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
+                                new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
                                 new List<IPrcaDiscussionComment>
                                 {
                                     new PrcaDiscussionComment()
@@ -196,7 +196,7 @@
                         },
                         new List<FilePath>
                         {
-                            new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
+                            new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
                         });
 
                 // When
@@ -218,7 +218,7 @@
                         new List<ICodeAnalysisIssue>
                         {
                             new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 10,
                                 "Foo",
                                 0,
@@ -234,7 +234,7 @@
                             new PrcaDiscussionThread(
                                 1,
                                 PrcaDiscussionStatus.Active,
-                                new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
+                                new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
                                 new List<IPrcaDiscussionComment>
                                 {
                                     new PrcaDiscussionComment()
@@ -249,7 +249,7 @@
                         },
                         new List<FilePath>
                         {
-                            new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
+                            new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
                         });
 
                 // When
@@ -271,14 +271,14 @@
                         new List<ICodeAnalysisIssue>
                         {
                             new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 10,
                                 "Foo",
                                 0,
                                 "Foo"
                             ),
                             new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
@@ -292,7 +292,7 @@
                         new List<IPrcaDiscussionThread>(),
                         new List<FilePath>
                         {
-                            new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
+                            new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
                         });
 
                 fixture.Settings.MaxIssuesToPost = 1;
@@ -316,14 +316,14 @@
                         new List<ICodeAnalysisIssue>
                         {
                             new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 10,
                                 "Foo",
                                 0,
                                 "Foo"
                             ),
                             new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\NotModified.cs",
+                                @"src\Cake.Prca.Tests\NotModified.cs",
                                 12,
                                 "Bar",
                                 0,
@@ -352,7 +352,7 @@
                     new PrcaDiscussionThread(
                         1,
                         PrcaDiscussionStatus.Active,
-                        new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
+                        new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs"),
                         new List<IPrcaDiscussionComment>
                         {
                             new PrcaDiscussionComment()
@@ -372,7 +372,7 @@
                         new List<ICodeAnalysisIssue>
                         {
                             new CodeAnalysisIssue(
-                                @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 10,
                                 "Foo",
                                 0,
@@ -389,7 +389,7 @@
                         },
                         new List<FilePath>
                         {
-                            new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
+                            new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
                         });
 
                 // When
@@ -406,7 +406,7 @@
                 // Given
                 var issueToPost =
                     new CodeAnalysisIssue(
-                        @"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                        @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                         10,
                         "Foo",
                         0,
@@ -428,7 +428,7 @@
                         new List<IPrcaDiscussionThread>(),
                         new List<FilePath>
                         {
-                            new FilePath(@"\src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
+                            new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
                         });
 
                 // When
