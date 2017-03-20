@@ -12,7 +12,8 @@
         /// Initializes a new instance of the <see cref="CodeAnalysisIssue"/> class.
         /// </summary>
         /// <param name="filePath">The path to the file affacted by the issue.
-        /// The path needs to be relative to the repository root.</param>
+        /// The path needs to be relative to the repository root.
+        /// <c>null</c> or <see cref="string.Empty"/> if issue is not related to a change in a file.</param>
         /// <param name="line">The line in the file where the issues has occurred.
         /// Nothing if the issue affects the whole file or an asssembly.</param>
         /// <param name="message">The message of the code analysis issue.</param>
@@ -21,21 +22,29 @@
         /// <param name="rule">The rule of the code analysis issue.</param>
         public CodeAnalysisIssue(string filePath, int? line, string message, int priority, string rule)
         {
-            filePath.NotNullOrWhiteSpace(nameof(filePath));
             line?.NotNegativeOrZero(nameof(line));
             message.NotNullOrWhiteSpace(nameof(message));
             rule.NotNull(nameof(rule));
 
-            if (!filePath.IsValidPath())
+            // File path needs to be relative to the repository root.
+            if (!string.IsNullOrWhiteSpace(filePath))
             {
-                throw new ArgumentException("Invalid path", nameof(filePath));
+                if (!filePath.IsValidPath())
+                {
+                    throw new ArgumentException("Invalid path", nameof(filePath));
+                }
+
+                this.AffectedFileRelativePath = filePath;
+
+                if (!this.AffectedFileRelativePath.IsRelative)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(filePath), "File path needs to be relative to the repository root.");
+                }
             }
 
-            // File path needs to be relative to the repository root.
-            this.AffectedFileRelativePath = filePath;
-            if (!this.AffectedFileRelativePath.IsRelative)
+            if (this.AffectedFileRelativePath == null && line.HasValue)
             {
-                throw new ArgumentOutOfRangeException(nameof(filePath), "File path needs to be relative to the repository root.");
+                throw new ArgumentOutOfRangeException(nameof(line), "Cannot specify a line while not specifying a file.");
             }
 
             this.Line = line;

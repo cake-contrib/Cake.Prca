@@ -8,36 +8,6 @@
     {
         public sealed class TheCodeAnalysisIssueCtor
         {
-            [Fact]
-            public void Should_Throw_If_File_Path_Is_Null()
-            {
-                // Given / When
-                var result = Record.Exception(() => new CodeAnalysisIssue(null, 100, "Foo", 1, "Bar"));
-
-                // Then
-                result.IsArgumentNullException("filePath");
-            }
-
-            [Fact]
-            public void Should_Throw_If_File_Path_Is_Empty()
-            {
-                // Given / When
-                var result = Record.Exception(() => new CodeAnalysisIssue(string.Empty, 100, "Foo", 1, "Bar"));
-
-                // Then
-                result.IsArgumentOutOfRangeException("filePath");
-            }
-
-            [Fact]
-            public void Should_Throw_If_File_Path_Is_WhiteSpace()
-            {
-                // Given / When
-                var result = Record.Exception(() => new CodeAnalysisIssue(" ", 100, "Foo", 1, "Bar"));
-
-                // Then
-                result.IsArgumentOutOfRangeException("filePath");
-            }
-
             [Theory]
             [InlineData(@"foo<bar")]
             public void Should_Throw_If_File_Path_Is_Invalid(string filePath)
@@ -66,7 +36,7 @@
             public void Should_Throw_If_Line_Is_Negative()
             {
                 // Given / When
-                var result = Record.Exception(() => new CodeAnalysisIssue(@"\src\foo.cs", -1, "Foo", 1, "Bar"));
+                var result = Record.Exception(() => new CodeAnalysisIssue(@"src\foo.cs", -1, "Foo", 1, "Bar"));
 
                 // Then
                 result.IsArgumentOutOfRangeException("line");
@@ -76,7 +46,17 @@
             public void Should_Throw_If_Line_Is_Zero()
             {
                 // Given / When
-                var result = Record.Exception(() => new CodeAnalysisIssue(@"\src\foo.cs", 0, "Foo", 1, "Bar"));
+                var result = Record.Exception(() => new CodeAnalysisIssue(@"src\foo.cs", 0, "Foo", 1, "Bar"));
+
+                // Then
+                result.IsArgumentOutOfRangeException("line");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Line_Is_Set_But_No_File()
+            {
+                // Given / When
+                var result = Record.Exception(() => new CodeAnalysisIssue(null, 10, "Foo", 1, "Bar"));
 
                 // Then
                 result.IsArgumentOutOfRangeException("line");
@@ -86,7 +66,7 @@
             public void Should_Throw_If_Message_Is_Null()
             {
                 // Given / When
-                var result = Record.Exception(() => new CodeAnalysisIssue(@"\src\foo.cs", 100, null, 1, "Bar"));
+                var result = Record.Exception(() => new CodeAnalysisIssue(@"src\foo.cs", 100, null, 1, "Bar"));
 
                 // Then
                 result.IsArgumentNullException("message");
@@ -96,7 +76,7 @@
             public void Should_Throw_If_Message_Is_Empty()
             {
                 // Given / When
-                var result = Record.Exception(() => new CodeAnalysisIssue(@"\src\foo.cs", 100, string.Empty, 1, "Bar"));
+                var result = Record.Exception(() => new CodeAnalysisIssue(@"src\foo.cs", 100, string.Empty, 1, "Bar"));
 
                 // Then
                 result.IsArgumentOutOfRangeException("message");
@@ -106,7 +86,7 @@
             public void Should_Throw_If_Message_Is_WhiteSpace()
             {
                 // Given / When
-                var result = Record.Exception(() => new CodeAnalysisIssue(@"\src\foo.cs", 100, " ", 1, "Bar"));
+                var result = Record.Exception(() => new CodeAnalysisIssue(@"src\foo.cs", 100, " ", 1, "Bar"));
 
                 // Then
                 result.IsArgumentOutOfRangeException("message");
@@ -116,10 +96,40 @@
             public void Should_Throw_If_Rule_Is_Null()
             {
                 // Given / When
-                var result = Record.Exception(() => new CodeAnalysisIssue(@"\src\foo.cs", 100, "foo", 1, null));
+                var result = Record.Exception(() => new CodeAnalysisIssue(@"src\foo.cs", 100, "foo", 1, null));
 
                 // Then
                 result.IsArgumentNullException("rule");
+            }
+
+            [Fact]
+            public void Should_Handle_File_Paths_Which_Are_Null()
+            {
+                // Given / When
+                var issue = new CodeAnalysisIssue(null, null, "Foo", 1, "Bar");
+
+                // Then
+                issue.AffectedFileRelativePath.ShouldBe(null);
+            }
+
+            [Fact]
+            public void Should_Handle_File_Paths_Which_Are_Empty()
+            {
+                // Given / When
+                var issue = new CodeAnalysisIssue(string.Empty, null, "Foo", 1, "Bar");
+
+                // Then
+                issue.AffectedFileRelativePath.ShouldBe(null);
+            }
+
+            [Fact]
+            public void Should_Handle_File_Paths_Which_Are_WhiteSpace()
+            {
+                // Given / When
+                var issue = new CodeAnalysisIssue(" ", null, "Foo", 1, "Bar");
+
+                // Then
+                issue.AffectedFileRelativePath.ShouldBe(null);
             }
 
             [Theory]
