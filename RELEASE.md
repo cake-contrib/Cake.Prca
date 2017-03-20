@@ -5,9 +5,10 @@ This document describes the necessary steps to release a new version of the Cake
 * Create a release branch (eg. `release\1.2.3`).
 * Make sure that a GitHub milestone exists for this release.
 * Make sure there were issues for all changes with the appropriate labels and the correct milestone set.
-* Make sure to have Git Release Manager installed locally `choco install gitreleasemanager.portable`.
-* Run Git Release Manager locally to create a GitHub release draft:
-  `grm create -o cake-contrib -r Cake.Prca -m 1.2.3 -u [yourname] -p [yourpassword]`
+* Make sure that you have the following environment variables set in your local development environment:
+  * `GITHUB_USERNAME`: Your GitHub user name.
+  * `GITHUB_PASSWORD`: Your GitHub password or personal access token.
+* Create a GitHub release draft by running: `build -target releasenotes`.
 * Check the generated release notes and make required manual changes.
 * If release is ready finish release (merge back into `master` and `develop`) but don't tag the release yet.
 * Publish the draft release on GitHub.
