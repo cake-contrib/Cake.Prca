@@ -24,7 +24,7 @@ More about Cake at http://cakebuild.net
 
 ## Quick Links
 
-- [Documentation](https://cake-contrib.github.io/Cake.Prca)
+- [Documentation](https://cake-contrib.github.io/Cake.Prca.Website)
 
 ## Chat Room
 
