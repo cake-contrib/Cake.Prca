@@ -18,10 +18,10 @@
         IEnumerable<IPrcaDiscussionThread> FetchActiveDiscussionThreads(string commentSource);
 
         /// <summary>
-        /// Marks a discussion thread as resolved.
+        /// Marks a list of discussion threads as resolved.
         /// </summary>
-        /// <param name="thread">Thread to mark as fixed.</param>
-        void MarkThreadAsFixed(IPrcaDiscussionThread thread);
+        /// <param name="threads">Threads to mark as fixed.</param>
+        void MarkThreadsAsFixed(IEnumerable<IPrcaDiscussionThread> threads);
 
         /// <summary>
         /// Returns a list of all files modified in a pull request.

@@ -33,7 +33,7 @@
         public abstract IEnumerable<FilePath> GetModifiedFilesInPullRequest();
 
         /// <inheritdoc/>
-        public abstract void MarkThreadAsFixed(IPrcaDiscussionThread thread);
+        public abstract void MarkThreadsAsFixed(IEnumerable<IPrcaDiscussionThread> threads);
 
         /// <inheritdoc/>
         public abstract void PostDiscussionThreads(IEnumerable<ICodeAnalysisIssue> issues, string commentSource);
