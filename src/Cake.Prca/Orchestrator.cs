@@ -227,14 +227,11 @@
                 return;
             }
 
-            // Comments that do not match HasElements input issues are said to be resolved.
-            var resolvedThreads = this.GetResolvedThreads(existingThreads, issueComments);
+            var resolvedThreads =
+                this.GetResolvedThreads(existingThreads, issueComments).ToList();
 
-            foreach (var thread in resolvedThreads)
-            {
-                this.log.Verbose("Mark thread with ID {0} as fixed...", thread.Id);
-                this.pullRequestSystem.MarkThreadAsFixed(thread);
-            }
+            this.log.Verbose("Mark {0} threads as fixed...", resolvedThreads.Count);
+            this.pullRequestSystem.MarkThreadsAsFixed(resolvedThreads);
         }
 
         /// <summary>
