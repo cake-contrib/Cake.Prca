@@ -2,6 +2,7 @@
 {
     using Core;
     using Core.Annotations;
+    using Core.IO;
     using Issues;
     using PullRequests;
 
@@ -17,6 +18,7 @@
         /// <param name="context">The context.</param>
         /// <param name="codeAnalysisProvider">The provider for code analysis issues.</param>
         /// <param name="pullRequestSystem">The pull request system.</param>
+        /// <param name="repositoryRoot">Root path of the repository.</param>
         /// <example>
         /// <para>Report code analysis issues reported as MsBuild warnings to a TFS pull request:</para>
         /// <code>
@@ -26,7 +28,10 @@
         ///             @"C:\build\msbuild.log",
         ///             MsBuildXmlFileLoggerFormat,
         ///             new DirectoryPath("c:\repo")),
-        ///         TfsPullRequests(new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"), "refs/heads/feature/myfeature"));
+        ///         TfsPullRequests(
+        ///             new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"),
+        ///             "refs/heads/feature/myfeature"),
+        ///             new DirectoryPath("c:\repo"));
         /// ]]>
         /// </code>
         /// </example>
@@ -34,16 +39,18 @@
         public static void ReportCodeAnalysisIssuesToPullRequest(
             this ICakeContext context,
             ICodeAnalysisProvider codeAnalysisProvider,
-            IPullRequestSystem pullRequestSystem)
+            IPullRequestSystem pullRequestSystem,
+            DirectoryPath repositoryRoot)
         {
             context.NotNull(nameof(context));
             codeAnalysisProvider.NotNull(nameof(codeAnalysisProvider));
             pullRequestSystem.NotNull(nameof(pullRequestSystem));
+            repositoryRoot.NotNull(nameof(repositoryRoot));
 
             context.ReportCodeAnalysisIssuesToPullRequest(
                 codeAnalysisProvider,
                 pullRequestSystem,
-                new ReportCodeAnalysisIssuesToPullRequestSettings());
+                new ReportCodeAnalysisIssuesToPullRequestSettings(repositoryRoot));
         }
 
         /// <summary>
@@ -58,7 +65,7 @@
         /// <code>
         /// <![CDATA[
         ///     var settings =
-        ///         new ReportCodeAnalysisIssuesToPullRequestSettings
+        ///         new ReportCodeAnalysisIssuesToPullRequestSettings(new DirectoryPath("c:\repo"))
         ///         {
         ///             MaxIssuesToPost = 10
         ///         };
@@ -68,7 +75,9 @@
         ///             @"C:\build\msbuild.log",
         ///             MsBuildXmlFileLoggerFormat,
         ///             new DirectoryPath("c:\repo")),
-        ///         TfsPullRequests(new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"), "refs/heads/feature/myfeature"));
+        ///         TfsPullRequests(
+        ///             new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"),
+        ///             "refs/heads/feature/myfeature"));
         ///         settings);
         /// ]]>
         /// </code>
