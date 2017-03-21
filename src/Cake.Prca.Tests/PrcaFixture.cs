@@ -8,11 +8,10 @@
 
     public class PrcaFixture
     {
-
         public PrcaFixture()
         {
             this.Log = new FakeLog();
-            Log.Verbosity = Verbosity.Normal;
+            this.Log.Verbosity = Verbosity.Normal;
             this.CodeAnalysisProvider = new FakeCodeAnalysisProvider(this.Log);
             this.PullRequestSystem = new FakePullRequestSystem(this.Log);
             this.Settings = new ReportCodeAnalysisIssuesToPullRequestSettings();

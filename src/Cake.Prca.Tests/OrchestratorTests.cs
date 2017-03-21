@@ -15,8 +15,10 @@
             public void Should_Throw_If_Log_Is_Null()
             {
                 // Given
-                var fixture = new PrcaFixture();
-                fixture.Log = null;
+                var fixture = new PrcaFixture
+                {
+                    Log = null
+                };
 
                 // When
                 var result = Record.Exception(() => fixture.RunOrchestrator());
@@ -29,8 +31,10 @@
             public void Should_Throw_If_Code_Analysis_Provider_Is_Null()
             {
                 // Given
-                var fixture = new PrcaFixture();
-                fixture.CodeAnalysisProvider = null;
+                var fixture = new PrcaFixture
+                {
+                    CodeAnalysisProvider = null
+                };
 
                 // When
                 var result = Record.Exception(() => fixture.RunOrchestrator());
@@ -43,8 +47,10 @@
             public void Should_Throw_If_Pull_Request_System_Is_Null()
             {
                 // Given
-                var fixture = new PrcaFixture();
-                fixture.PullRequestSystem = null;
+                var fixture = new PrcaFixture
+                {
+                    PullRequestSystem = null
+                };
 
                 // When
                 var result = Record.Exception(() => fixture.RunOrchestrator());
@@ -57,8 +63,10 @@
             public void Should_Throw_If_Settings_Are_Null()
             {
                 // Given
-                var fixture = new PrcaFixture();
-                fixture.Settings = null;
+                var fixture = new PrcaFixture
+                {
+                    Settings = null
+                };
 
                 // When
                 var result = Record.Exception(() => fixture.RunOrchestrator());
@@ -85,15 +93,13 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            ),
+                                "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
-                                "Bar"
-                            )
+                                "Bar")
                         });
 
                 // When
@@ -118,15 +124,13 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            ),
+                                "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\NotModified.cs",
                                 12,
                                 "Bar",
                                 0,
-                                "Bar"
-                            )
+                                "Bar")
                         });
 
                 fixture.PullRequestSystem =
@@ -161,15 +165,13 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            ),
+                                "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
-                                "Bar"
-                            )
+                                "Bar")
                         });
 
                 fixture.PullRequestSystem =
@@ -188,8 +190,7 @@
                                         Content = "Foo",
                                         IsDeleted = false
                                     }
-                                }
-                                )
+                                })
                             {
                                 CommentSource = fixture.Settings.CommentSource,
                             }
@@ -222,8 +223,7 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            )
+                                "Foo")
                         });
 
                 fixture.PullRequestSystem =
@@ -275,15 +275,13 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            ),
+                                "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
-                                "Bar"
-                            )
+                                "Bar")
                         });
 
                 fixture.PullRequestSystem =
@@ -320,15 +318,13 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            ),
+                                "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\NotModified.cs",
                                 12,
                                 "Bar",
                                 0,
-                                "Bar"
-                            )
+                                "Bar")
                         });
 
                 fixture.PullRequestSystem =
@@ -376,8 +372,7 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            )
+                                "Foo")
                         });
 
                 fixture.PullRequestSystem =
@@ -410,8 +405,7 @@
                         10,
                         "Foo",
                         0,
-                        "Foo"
-                    );
+                        "Foo");
 
                 var fixture = new PrcaFixture();
                 fixture.CodeAnalysisProvider =
