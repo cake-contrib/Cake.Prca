@@ -66,6 +66,7 @@
     <Compile Include="PrcaAliases.cs" />
     <Compile Include="PrcaException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PrcaCommentFormat.cs" />
     <Compile Include="PullRequests\PrcaDiscussionComment.cs" />
     <Compile Include="PullRequests\PrcaDiscussionStatus.cs" />
     <Compile Include="PullRequests\PrcaDiscussionThread.cs" />

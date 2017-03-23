@@ -107,6 +107,31 @@
 
         public sealed class TheRunMethod
         {
+            [Theory]
+            [InlineData(PrcaCommentFormat.Undefined)]
+            [InlineData(PrcaCommentFormat.Html)]
+            [InlineData(PrcaCommentFormat.Markdown)]
+            [InlineData(PrcaCommentFormat.PlainText)]
+            public void Should_Use_The_Correct_Comment_Format(PrcaCommentFormat format)
+            {
+                // Given
+                var fixture = new PrcaFixture();
+                fixture.PullRequestSystem =
+                    new FakePullRequestSystem(
+                        fixture.Log,
+                        new List<IPrcaDiscussionThread>(),
+                        new List<FilePath>())
+                    {
+                        CommentFormat = format
+                    };
+
+                // When
+                fixture.RunOrchestrator();
+
+                // Then
+                fixture.CodeAnalysisProviders.ShouldAllBe(x => x.Format == format);
+            }
+
             [Fact]
             public void Should_Initialize_Code_Analysis_Provider()
             {

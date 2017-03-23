@@ -16,7 +16,8 @@
         /// <summary>
         /// Gets all code analysis issues.
         /// </summary>
+        /// <param name="format">Preferred format of the comments.</param>
         /// <returns>List of code analysis issues</returns>
-        IEnumerable<ICodeAnalysisIssue> ReadIssues();
+        IEnumerable<ICodeAnalysisIssue> ReadIssues(PrcaCommentFormat format);
     }
 }
