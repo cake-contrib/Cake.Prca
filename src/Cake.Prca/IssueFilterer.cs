@@ -120,6 +120,7 @@
             var result =
                 issues
                     .Where(issue =>
+                        issue.AffectedFileRelativePath == null ||
                         modifiedFilesHashSet.Contains(
                             issue.AffectedFileRelativePath.MakeAbsolute(this.settings.RepositoryRoot).ToString()))
                     .ToList();
