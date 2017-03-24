@@ -30,8 +30,9 @@
         ///             new DirectoryPath("c:\repo")),
         ///         TfsPullRequests(
         ///             new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"),
-        ///             "refs/heads/feature/myfeature"),
-        ///             new DirectoryPath("c:\repo"));
+        ///             "refs/heads/feature/myfeature",
+        ///             PrcaAuthenticationNtlm()),
+        ///         new DirectoryPath("c:\repo"));
         /// ]]>
         /// </code>
         /// </example>
@@ -77,8 +78,9 @@
         ///             new DirectoryPath("c:\repo")),
         ///         TfsPullRequests(
         ///             new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"),
-        ///             "refs/heads/feature/myfeature"));
-        ///         settings);
+        ///             "refs/heads/feature/myfeature",
+        ///             PrcaAuthenticationNtlm()),
+        ///         settings));
         /// ]]>
         /// </code>
         /// </example>
