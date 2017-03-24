@@ -1,5 +1,6 @@
 ﻿namespace Cake.Prca.Tests.Issues
 {
+    using System;
     using Prca.Issues;
     using Shouldly;
     using Xunit;
@@ -215,6 +216,32 @@
 
                 // Then
                 issue.Rule.ShouldBe(rule);
+            }
+
+            [Fact]
+            public void Should_Set_Rule_Url()
+            {
+                // Given
+                var ruleUrl = new Uri("http://google.com");
+
+                // When
+                var issue = new CodeAnalysisIssue(@"foo.cs", 100, "foo", 1, "foo", ruleUrl, "foo");
+
+                // Then
+                issue.RuleUrl.ShouldBe(ruleUrl);
+            }
+
+            [Fact]
+            public void Should_Set_Rule_Url_If_Null()
+            {
+                // Given
+                Uri ruleUrl = null;
+
+                // When
+                var issue = new CodeAnalysisIssue(@"foo.cs", 100, "foo", 1, "foo", ruleUrl, "foo");
+
+                // Then
+                issue.RuleUrl.ShouldBe(ruleUrl);
             }
 
             [Theory]

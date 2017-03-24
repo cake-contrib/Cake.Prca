@@ -1,5 +1,6 @@
 ﻿namespace Cake.Prca.Issues
 {
+    using System;
     using Core.IO;
 
     /// <summary>
@@ -35,6 +36,12 @@
         /// Gets the rule of the code analysis issue.
         /// </summary>
         string Rule { get; }
+
+        /// <summary>
+        /// Gets the URL containing information about the failing rule.
+        /// Can be <c>null</c> if the issue provider provides no URL.
+        /// </summary>
+        Uri RuleUrl { get; }
 
         /// <summary>
         /// Gets the type of the issue provider.
