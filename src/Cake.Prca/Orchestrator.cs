@@ -57,6 +57,23 @@
         }
 
         /// <summary>
+        /// Checks if file path from an <see cref="ICodeAnalysisIssue"/> and <see cref="IPrcaDiscussionThread"/>
+        /// are matching.
+        /// </summary>
+        /// <param name="issue">Issue to check.</param>
+        /// <param name="thread">Comment thread to check.</param>
+        /// <returns><c>true</c> if both paths are matching or if both paths are set to <c>null</c>.</returns>
+        private static bool FilePathsAreMatching(ICodeAnalysisIssue issue, IPrcaDiscussionThread thread)
+        {
+            return
+                (issue.AffectedFileRelativePath == null && thread.AffectedFileRelativePath == null) ||
+                (
+                    issue.AffectedFileRelativePath != null &&
+                    thread.AffectedFileRelativePath != null &&
+                    thread.AffectedFileRelativePath.ToString() == issue.AffectedFileRelativePath.ToString());
+        }
+
+        /// <summary>
         /// Posts new issues, ignoring duplicate comments and resolves comments that were open in an old iteration
         /// of the pull request.
         /// </summary>
@@ -168,7 +185,7 @@
                 where
                     thread != null &&
                     thread.Status == PrcaDiscussionStatus.Active &&
-                    thread.AffectedFileRelativePath.ToString() == issue.AffectedFileRelativePath.ToString() &&
+                    FilePathsAreMatching(issue, thread) &&
                     thread.CommentSource == this.settings.CommentSource
                 select thread).ToList();
 
@@ -227,14 +244,11 @@
                 return;
             }
 
-            // Comments that do not match HasElements input issues are said to be resolved.
-            var resolvedThreads = this.GetResolvedThreads(existingThreads, issueComments);
+            var resolvedThreads =
+                this.GetResolvedThreads(existingThreads, issueComments).ToList();
 
-            foreach (var thread in resolvedThreads)
-            {
-                this.log.Verbose("Mark thread with ID {0} as fixed...", thread.Id);
-                this.pullRequestSystem.MarkThreadAsFixed(thread);
-            }
+            this.log.Verbose("Mark {0} threads as fixed...", resolvedThreads.Count);
+            this.pullRequestSystem.MarkThreadsAsFixed(resolvedThreads);
         }
 
         /// <summary>

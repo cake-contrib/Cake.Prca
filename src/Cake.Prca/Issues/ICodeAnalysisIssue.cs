@@ -10,6 +10,7 @@
         /// <summary>
         /// Gets the path to the file affacted by the issue.
         /// The path is relative to the repository root.
+        /// Can be <c>null</c> if issue is not related to a change in a file.
         /// </summary>
         FilePath AffectedFileRelativePath { get; }
 

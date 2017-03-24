@@ -21,6 +21,7 @@
         /// <summary>
         /// Gets or sets the path to the file where the message should be posted.
         /// The path needs to be relative to the repository root.
+        /// Can be <c>null</c> if discussion is not related to a change in a file.
         /// </summary>
         FilePath AffectedFileRelativePath { get; set; }
 

@@ -8,7 +8,7 @@
     {
         private readonly List<ICodeAnalysisIssue> issues = new List<ICodeAnalysisIssue>();
 
-        public FakeCodeAnalysisProvider(ICakeLog log) 
+        public FakeCodeAnalysisProvider(ICakeLog log)
             : base(log)
         {
         }
@@ -23,11 +23,11 @@
             this.issues.AddRange(issues);
         }
 
+        public new ICakeLog Log => base.Log;
+
         public override IEnumerable<ICodeAnalysisIssue> ReadIssues()
         {
             return this.issues;
         }
-
-        public new ICakeLog Log => base.Log;
     }
 }

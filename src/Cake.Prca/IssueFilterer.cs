@@ -107,19 +107,22 @@
             var modifiedFilesList = this.pullRequestSystem.GetModifiedFilesInPullRequest().ToList();
             ValidateModifiedFiles(modifiedFilesList);
 
+            // Create paths absolute to repository root.
             var modifiedFilesHashSet =
-                new HashSet<string>(modifiedFilesList.Select(x => x.ToString()));
+                new HashSet<string>(modifiedFilesList.Select(x => x.MakeAbsolute(this.settings.RepositoryRoot).ToString()));
             this.log.Verbose(
                 "Files changed in this pull request:\n{0}",
                 string.Join(
                     Environment.NewLine,
                     modifiedFilesHashSet.Select(x => "  " + x)));
 
-            // TODO Comparing by string can lead to wrong results if eg. ".." is used in the path. Better would be to compare full path, but for resolving this we need to have the repo root here.
             var countBefore = issues.Count;
             var result =
                 issues
-                    .Where(issue => modifiedFilesHashSet.Contains(issue.AffectedFileRelativePath.ToString()))
+                    .Where(issue =>
+                        issue.AffectedFileRelativePath == null ||
+                        modifiedFilesHashSet.Contains(
+                            issue.AffectedFileRelativePath.MakeAbsolute(this.settings.RepositoryRoot).ToString()))
                     .ToList();
             var commentsFiltered = countBefore - result.Count;
 

@@ -14,8 +14,10 @@
             public void Should_Throw_If_Log_Is_Null()
             {
                 // Given
-                var fixture = new PrcaFixture();
-                fixture.Log = null;
+                var fixture = new PrcaFixture
+                {
+                    Log = null
+                };
 
                 // When
                 var result = Record.Exception(() => fixture.FilterIssues(null, null));
@@ -28,8 +30,10 @@
             public void Should_Throw_If_Pull_Request_System_Is_Null()
             {
                 // Given
-                var fixture = new PrcaFixture();
-                fixture.PullRequestSystem = null;
+                var fixture = new PrcaFixture
+                {
+                    PullRequestSystem = null
+                };
 
                 // When
                 var result = Record.Exception(() => fixture.FilterIssues(null, null));
@@ -42,8 +46,10 @@
             public void Should_Throw_If_Settings_Are_Null()
             {
                 // Given
-                var fixture = new PrcaFixture();
-                fixture.Settings = null;
+                var fixture = new PrcaFixture
+                {
+                    Settings = null
+                };
 
                 // When
                 var result = Record.Exception(() => fixture.FilterIssues(null, null));
@@ -96,7 +102,7 @@
                         });
 
                 // When
-                var result = Record.Exception(() => 
+                var result = Record.Exception(() =>
                     fixture.FilterIssues(
                         new List<ICodeAnalysisIssue>
                         {
@@ -105,8 +111,7 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            )
+                                "Foo")
                         },
                         new Dictionary<ICodeAnalysisIssue, IEnumerable<IPrcaDiscussionComment>>()));
 

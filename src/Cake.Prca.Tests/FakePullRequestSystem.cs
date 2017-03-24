@@ -26,14 +26,18 @@
         {
             // ReSharper disable once PossibleMultipleEnumeration
             discussionThreads.NotNull(nameof(discussionThreads));
+
             // ReSharper disable once PossibleMultipleEnumeration
             modifiedFiles.NotNull(nameof(modifiedFiles));
 
             // ReSharper disable once PossibleMultipleEnumeration
             this.discussionThreads.AddRange(discussionThreads);
+
             // ReSharper disable once PossibleMultipleEnumeration
             this.modifiedFiles.AddRange(modifiedFiles);
         }
+
+        public new ICakeLog Log => base.Log;
 
         public IEnumerable<IPrcaDiscussionThread> ThreadsMarkedAsFixed => this.threadsMarkedAsFixed;
 
@@ -49,11 +53,13 @@
             return this.modifiedFiles;
         }
 
-        public override void MarkThreadAsFixed(IPrcaDiscussionThread thread)
+        public override void MarkThreadsAsFixed(IEnumerable<IPrcaDiscussionThread> threads)
         {
-            thread.NotNull(nameof(thread));
+            // ReSharper disable once PossibleMultipleEnumeration
+            threads.NotNull(nameof(threads));
 
-            this.threadsMarkedAsFixed.Add(thread);
+            // ReSharper disable once PossibleMultipleEnumeration
+            this.threadsMarkedAsFixed.AddRange(threads);
         }
 
         public override void PostDiscussionThreads(IEnumerable<ICodeAnalysisIssue> issues, string commentSource)
@@ -64,7 +70,5 @@
             // ReSharper disable once PossibleMultipleEnumeration
             this.postedIssues.AddRange(issues);
         }
-
-        public new ICakeLog Log => base.Log;
     }
 }

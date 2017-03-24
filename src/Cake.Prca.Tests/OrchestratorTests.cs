@@ -15,8 +15,10 @@
             public void Should_Throw_If_Log_Is_Null()
             {
                 // Given
-                var fixture = new PrcaFixture();
-                fixture.Log = null;
+                var fixture = new PrcaFixture
+                {
+                    Log = null
+                };
 
                 // When
                 var result = Record.Exception(() => fixture.RunOrchestrator());
@@ -29,8 +31,10 @@
             public void Should_Throw_If_Code_Analysis_Provider_Is_Null()
             {
                 // Given
-                var fixture = new PrcaFixture();
-                fixture.CodeAnalysisProvider = null;
+                var fixture = new PrcaFixture
+                {
+                    CodeAnalysisProvider = null
+                };
 
                 // When
                 var result = Record.Exception(() => fixture.RunOrchestrator());
@@ -43,8 +47,10 @@
             public void Should_Throw_If_Pull_Request_System_Is_Null()
             {
                 // Given
-                var fixture = new PrcaFixture();
-                fixture.PullRequestSystem = null;
+                var fixture = new PrcaFixture
+                {
+                    PullRequestSystem = null
+                };
 
                 // When
                 var result = Record.Exception(() => fixture.RunOrchestrator());
@@ -57,8 +63,10 @@
             public void Should_Throw_If_Settings_Are_Null()
             {
                 // Given
-                var fixture = new PrcaFixture();
-                fixture.Settings = null;
+                var fixture = new PrcaFixture
+                {
+                    Settings = null
+                };
 
                 // When
                 var result = Record.Exception(() => fixture.RunOrchestrator());
@@ -85,15 +93,44 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            ),
+                                "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
-                                "Bar"
-                            )
+                                "Bar")
+                        });
+
+                // When
+                fixture.RunOrchestrator();
+
+                // Then
+                fixture.Log.Entries.ShouldContain(x => x.Message == "Processing 2 new issues");
+            }
+
+            [Fact]
+            public void Should_Read_Correct_Number_Of_Code_Analysis_Issues_Not_Related_To_A_File()
+            {
+                // Given
+                var fixture = new PrcaFixture();
+                fixture.CodeAnalysisProvider =
+                    new FakeCodeAnalysisProvider(
+                        fixture.Log,
+                        new List<ICodeAnalysisIssue>
+                        {
+                            new CodeAnalysisIssue(
+                                null,
+                                null,
+                                "Foo",
+                                0,
+                                "Foo"),
+                            new CodeAnalysisIssue(
+                                null,
+                                null,
+                                "Bar",
+                                0,
+                                "Bar")
                         });
 
                 // When
@@ -118,15 +155,13 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            ),
+                                "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\NotModified.cs",
                                 12,
                                 "Bar",
                                 0,
-                                "Bar"
-                            )
+                                "Bar")
                         });
 
                 fixture.PullRequestSystem =
@@ -161,15 +196,13 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            ),
+                                "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
-                                "Bar"
-                            )
+                                "Bar")
                         });
 
                 fixture.PullRequestSystem =
@@ -188,8 +221,65 @@
                                         Content = "Foo",
                                         IsDeleted = false
                                     }
-                                }
-                                )
+                                })
+                            {
+                                CommentSource = fixture.Settings.CommentSource,
+                            }
+                        },
+                        new List<FilePath>
+                        {
+                            new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
+                        });
+
+                // When
+                fixture.RunOrchestrator();
+
+                // Then
+                fixture.Log.Entries.ShouldContain(x => x.Message == "1 issue(s) were filtered because they were already present");
+                fixture.Log.Entries.ShouldContain(x => x.Message.StartsWith("Posting 1 issue(s):"));
+            }
+
+            [Fact]
+            public void Should_Ignore_Issues_Already_Present_Not_Related_To_A_File()
+            {
+                // Given
+                var fixture = new PrcaFixture();
+                fixture.CodeAnalysisProvider =
+                    new FakeCodeAnalysisProvider(
+                        fixture.Log,
+                        new List<ICodeAnalysisIssue>
+                        {
+                            new CodeAnalysisIssue(
+                                null,
+                                null,
+                                "Foo",
+                                0,
+                                "Foo"),
+                            new CodeAnalysisIssue(
+                                null,
+                                null,
+                                "Bar",
+                                0,
+                                "Bar")
+                        });
+
+                fixture.PullRequestSystem =
+                    new FakePullRequestSystem(
+                        fixture.Log,
+                        new List<IPrcaDiscussionThread>
+                        {
+                            new PrcaDiscussionThread(
+                                1,
+                                PrcaDiscussionStatus.Active,
+                                null,
+                                new List<IPrcaDiscussionComment>
+                                {
+                                    new PrcaDiscussionComment()
+                                    {
+                                        Content = "Foo",
+                                        IsDeleted = false
+                                    }
+                                })
                             {
                                 CommentSource = fixture.Settings.CommentSource,
                             }
@@ -222,8 +312,7 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            )
+                                "Foo")
                         });
 
                 fixture.PullRequestSystem =
@@ -275,15 +364,13 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            ),
+                                "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
-                                "Bar"
-                            )
+                                "Bar")
                         });
 
                 fixture.PullRequestSystem =
@@ -320,15 +407,13 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            ),
+                                "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\NotModified.cs",
                                 12,
                                 "Bar",
                                 0,
-                                "Bar"
-                            )
+                                "Bar")
                         });
 
                 fixture.PullRequestSystem =
@@ -376,8 +461,7 @@
                                 10,
                                 "Foo",
                                 0,
-                                "Foo"
-                            )
+                                "Foo")
                         });
 
                 fixture.PullRequestSystem =
@@ -410,8 +494,7 @@
                         10,
                         "Foo",
                         0,
-                        "Foo"
-                    );
+                        "Foo");
 
                 var fixture = new PrcaFixture();
                 fixture.CodeAnalysisProvider =
@@ -437,12 +520,50 @@
                 // Then
                 fixture.PullRequestSystem.PostedIssues.ShouldContain(issueToPost);
                 fixture.Log.Entries.ShouldContain(
-                    x => x.Message ==
-                        string.Format(
-                            "Posting 1 issue(s):\n  Rule: {0} Line: {1} File: {2}",
-                            issueToPost.Rule,
-                            issueToPost.Line,
-                            issueToPost.AffectedFileRelativePath));
+                    x =>
+                        x.Message ==
+                            $"Posting 1 issue(s):\n  Rule: {issueToPost.Rule} Line: {issueToPost.Line} File: {issueToPost.AffectedFileRelativePath}");
+            }
+
+            [Fact]
+            public void Should_Post_Issue_Not_Related_To_A_File()
+            {
+                // Given
+                var issueToPost =
+                    new CodeAnalysisIssue(
+                        null,
+                        null,
+                        "Foo",
+                        0,
+                        "Foo");
+
+                var fixture = new PrcaFixture();
+                fixture.CodeAnalysisProvider =
+                    new FakeCodeAnalysisProvider(
+                        fixture.Log,
+                        new List<ICodeAnalysisIssue>
+                        {
+                            issueToPost
+                        });
+
+                fixture.PullRequestSystem =
+                    new FakePullRequestSystem(
+                        fixture.Log,
+                        new List<IPrcaDiscussionThread>(),
+                        new List<FilePath>
+                        {
+                            new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
+                        });
+
+                // When
+                fixture.RunOrchestrator();
+
+                // Then
+                fixture.PullRequestSystem.PostedIssues.ShouldContain(issueToPost);
+                fixture.Log.Entries.ShouldContain(
+                    x =>
+                        x.Message ==
+                            $"Posting 1 issue(s):\n  Rule: {issueToPost.Rule} Line: {issueToPost.Line} File: {issueToPost.AffectedFileRelativePath}");
             }
         }
     }
