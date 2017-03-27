@@ -50,6 +50,12 @@
         /// </summary>
         public void Run()
         {
+            this.log.Verbose("Initialize code analysis provider...");
+            this.codeAnalysisProvider.Initialize(this.settings);
+
+            this.log.Verbose("Initialize pull request system...");
+            this.pullRequestSystem.Initialize(this.settings);
+
             var issues = this.codeAnalysisProvider.ReadIssues().ToList();
             this.log.Information("Processing {0} new issues", issues.Count);
 

@@ -27,6 +27,9 @@
         protected ICakeLog Log { get; }
 
         /// <inheritdoc/>
+        public abstract void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings);
+
+        /// <inheritdoc/>
         public abstract IEnumerable<IPrcaDiscussionThread> FetchActiveDiscussionThreads(string commentSource);
 
         /// <inheritdoc/>

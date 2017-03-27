@@ -25,6 +25,9 @@
         protected ICakeLog Log { get; }
 
         /// <inheritdoc/>
+        public abstract void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings);
+
+        /// <inheritdoc/>
         public abstract IEnumerable<ICodeAnalysisIssue> ReadIssues();
     }
 }
