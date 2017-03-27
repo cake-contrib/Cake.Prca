@@ -1,7 +1,9 @@
 ﻿namespace Cake.Prca
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
 
     /// <summary>
     /// Common runtime checks that throw <see cref="ArgumentException"/> upon failure.
@@ -73,6 +75,49 @@
             if (value <= 0)
             {
                 throw new ArgumentOutOfRangeException(parameterName);
+            }
+        }
+
+        /// <summary>
+        /// Throws an exception if the specified parameter's value is null or empty.
+        /// </summary>
+        /// <typeparam name="T">The type of the parameter.</typeparam>
+        /// <param name="value">The value of the argument.</param>
+        /// <param name="parameterName">The name of the parameter to include in any thrown exception.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c></exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="value"/> is empty.</exception>
+        [DebuggerStepThrough]
+        public static void NotNullOrEmpty<T>(this IEnumerable<T> value, string parameterName)
+        {
+            // ReSharper disable once PossibleMultipleEnumeration
+            value.NotNull(parameterName);
+
+            // ReSharper disable once PossibleMultipleEnumeration
+            if (!value.Any())
+            {
+                throw new ArgumentException("Empty list.", parameterName);
+            }
+        }
+
+        /// <summary>
+        /// Throws an exception if the specified parameter's value is null, empty or contains an empty element.
+        /// </summary>
+        /// <typeparam name="T">The type of the parameter.</typeparam>
+        /// <param name="value">The value of the argument.</param>
+        /// <param name="parameterName">The name of the parameter to include in any thrown exception.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c></exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="value"/> is empty.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> contains an empty element.</exception>
+        [DebuggerStepThrough]
+        public static void NotNullOrEmptyOrEmptyElement<T>(this IEnumerable<T> value, string parameterName)
+        {
+            // ReSharper disable once PossibleMultipleEnumeration
+            value.NotNullOrEmpty(parameterName);
+
+            // ReSharper disable once PossibleMultipleEnumeration
+            if (value.Any(x => x == null))
+            {
+                throw new ArgumentOutOfRangeException(parameterName, "List contains.");
             }
         }
     }

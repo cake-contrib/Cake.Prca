@@ -10,9 +10,8 @@
     {
         public PrcaFixture()
         {
-            this.Log = new FakeLog();
-            this.Log.Verbosity = Verbosity.Normal;
-            this.CodeAnalysisProvider = new FakeCodeAnalysisProvider(this.Log);
+            this.Log = new FakeLog { Verbosity = Verbosity.Normal };
+            this.CodeAnalysisProviders = new List<FakeCodeAnalysisProvider> { new FakeCodeAnalysisProvider(this.Log) };
             this.PullRequestSystem = new FakePullRequestSystem(this.Log);
             this.Settings =
                 new ReportCodeAnalysisIssuesToPullRequestSettings(
@@ -21,7 +20,7 @@
 
         public FakeLog Log { get; set; }
 
-        public FakeCodeAnalysisProvider CodeAnalysisProvider { get; set; }
+        public IList<FakeCodeAnalysisProvider> CodeAnalysisProviders { get; set; }
 
         public FakePullRequestSystem PullRequestSystem { get; set; }
 
@@ -29,7 +28,12 @@
 
         public void RunOrchestrator()
         {
-            var orchestrator = new Orchestrator(this.Log, this.CodeAnalysisProvider, this.PullRequestSystem, this.Settings);
+            var orchestrator =
+                new Orchestrator(
+                    this.Log,
+                    this.CodeAnalysisProviders,
+                    this.PullRequestSystem,
+                    this.Settings);
             orchestrator.Run();
         }
 

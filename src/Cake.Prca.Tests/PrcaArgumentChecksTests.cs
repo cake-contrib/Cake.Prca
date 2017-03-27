@@ -1,5 +1,6 @@
 ﻿namespace Cake.Prca.Tests
 {
+    using System.Collections.Generic;
     using Xunit;
 
     public sealed class PrcaArgumentChecksTests
@@ -133,6 +134,106 @@
             public void Should_Not_Throw_If_Value_Is_Valid(int value)
             {
                 value.NotNegative("foo");
+            }
+        }
+
+        public sealed class TheNotNullOrEmptyExtension
+        {
+            [Fact]
+            public void Should_Throw_If_Value_Is_Null()
+            {
+                // Given
+                List<int> value = null;
+
+                // When
+                var result = Record.Exception(() => value.NotNullOrEmpty("foo"));
+
+                // Then
+                result.IsArgumentNullException("foo");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Value_Is_Empty()
+            {
+                // Given
+                var value = new List<int>();
+
+                // When
+                var result = Record.Exception(() => value.NotNullOrEmpty("foo"));
+
+                // Then
+                result.IsArgumentException("foo");
+            }
+
+            [Theory]
+            [InlineData(null)]
+            [InlineData("")]
+            [InlineData("foo")]
+            public void Should_Not_Throw_If_Value_Is_Valid(string value)
+            {
+                // Given
+                var values = new List<string> { value };
+
+                // When
+                values.NotNullOrEmpty("foo");
+
+                // Then
+            }
+        }
+
+        public sealed class TheNotNullOrEmptyOrEmptyElementExtension
+        {
+            [Fact]
+            public void Should_Throw_If_Value_Is_Null()
+            {
+                // Given
+                List<int> value = null;
+
+                // When
+                var result = Record.Exception(() => value.NotNullOrEmptyOrEmptyElement("foo"));
+
+                // Then
+                result.IsArgumentNullException("foo");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Value_Is_Empty()
+            {
+                // Given
+                var value = new List<int>();
+
+                // When
+                var result = Record.Exception(() => value.NotNullOrEmptyOrEmptyElement("foo"));
+
+                // Then
+                result.IsArgumentException("foo");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Value_Contains_Null()
+            {
+                // Given
+                var value = new List<string> { null };
+
+                // When
+                var result = Record.Exception(() => value.NotNullOrEmptyOrEmptyElement("foo"));
+
+                // Then
+                result.IsArgumentOutOfRangeException("foo");
+            }
+
+            [Theory]
+            [InlineData("")]
+            [InlineData("foo")]
+            public void Should_Not_Throw_If_Value_Is_Valid(string value)
+            {
+                // Given
+                var values = new List<string> { value };
+
+                // When
+                values.NotNullOrEmptyOrEmptyElement("foo");
+
+                // Then
             }
         }
     }
