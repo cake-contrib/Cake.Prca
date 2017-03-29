@@ -28,6 +28,6 @@
         public abstract void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings);
 
         /// <inheritdoc/>
-        public abstract IEnumerable<ICodeAnalysisIssue> ReadIssues();
+        public abstract IEnumerable<ICodeAnalysisIssue> ReadIssues(PrcaCommentFormat format);
     }
 }

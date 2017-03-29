@@ -57,6 +57,9 @@
             this.log.Verbose("Initialize pull request system...");
             this.pullRequestSystem.Initialize(this.settings);
 
+            var format = this.pullRequestSystem.GetPreferredCommentFormat();
+            this.log.Verbose("Pull request system prefers comments in {0} format.", format);
+
             var issues = new List<ICodeAnalysisIssue>();
             foreach (var codeAnalysisProvider in this.codeAnalysisProviders)
             {
@@ -64,7 +67,7 @@
                 codeAnalysisProvider.Initialize(this.settings);
 
                 this.log.Verbose("Reading issues from {0}...", codeAnalysisProvider.GetType().Name);
-                var currentIssues = codeAnalysisProvider.ReadIssues().ToList();
+                var currentIssues = codeAnalysisProvider.ReadIssues(format).ToList();
                 this.log.Verbose(
                     "Found {0} issues using issue provider {1}...",
                     currentIssues.Count,

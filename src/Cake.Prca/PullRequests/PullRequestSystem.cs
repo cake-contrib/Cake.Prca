@@ -30,6 +30,12 @@
         public abstract void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings);
 
         /// <inheritdoc/>
+        public virtual PrcaCommentFormat GetPreferredCommentFormat()
+        {
+            return PrcaCommentFormat.PlainText;
+        }
+
+        /// <inheritdoc/>
         public abstract IEnumerable<IPrcaDiscussionThread> FetchActiveDiscussionThreads(string commentSource);
 
         /// <inheritdoc/>
