@@ -35,5 +35,10 @@
         /// Gets the rule of the code analysis issue.
         /// </summary>
         string Rule { get; }
+
+        /// <summary>
+        /// Gets the type of the issue provider.
+        /// </summary>
+        string ProviderType { get; }
     }
 }

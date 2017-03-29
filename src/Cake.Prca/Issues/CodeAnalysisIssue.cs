@@ -20,11 +20,19 @@
         /// <param name="priority">The priority of the message used to filter out issues if there are more issues than
         /// should be posted.</param>
         /// <param name="rule">The rule of the code analysis issue.</param>
-        public CodeAnalysisIssue(string filePath, int? line, string message, int priority, string rule)
+        /// <param name="providerType">The type of the issue provider.</param>
+        public CodeAnalysisIssue(
+            string filePath,
+            int? line,
+            string message,
+            int priority,
+            string rule,
+            string providerType)
         {
             line?.NotNegativeOrZero(nameof(line));
             message.NotNullOrWhiteSpace(nameof(message));
             rule.NotNull(nameof(rule));
+            providerType.NotNullOrWhiteSpace(nameof(providerType));
 
             // File path needs to be relative to the repository root.
             if (!string.IsNullOrWhiteSpace(filePath))
@@ -51,6 +59,7 @@
             this.Message = message;
             this.Priority = priority;
             this.Rule = rule;
+            this.ProviderType = providerType;
         }
 
         /// <inheritdoc/>
@@ -67,5 +76,8 @@
 
         /// <inheritdoc/>
         public string Rule { get; }
+
+        /// <inheritdoc/>
+        public string ProviderType { get; }
     }
 }

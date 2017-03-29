@@ -73,6 +73,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Issues\CodeAnalysisIssueOfTTests.cs" />
     <Compile Include="Issues\CodeAnalysisProviderTests.cs" />
     <Compile Include="ExceptionAssertExtensions.cs" />
     <Compile Include="FakeCodeAnalysisProvider.cs" />

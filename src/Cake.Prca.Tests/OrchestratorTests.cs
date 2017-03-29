@@ -136,12 +136,14 @@
                                 10,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
+                                "Bar",
                                 "Bar")
                         }));
                 fixture.CodeAnalysisProviders.Add(
@@ -154,12 +156,14 @@
                                 5,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\Bar.cs",
                                 7,
                                 "Bar",
                                 0,
+                                "Bar",
                                 "Bar")
                         }));
 
@@ -199,12 +203,14 @@
                                 10,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
+                                "Bar",
                                 "Bar")
                         }));
 
@@ -231,12 +237,14 @@
                                 null,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo"),
                             new CodeAnalysisIssue(
                                 null,
                                 null,
                                 "Bar",
                                 0,
+                                "Bar",
                                 "Bar")
                         }));
 
@@ -263,12 +271,14 @@
                                 10,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
+                                "Bar",
                                 "Bar")
                         }));
                 fixture.CodeAnalysisProviders.Add(
@@ -281,12 +291,14 @@
                                 5,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\Bar.cs",
                                 7,
                                 "Bar",
                                 0,
+                                "Bar",
                                 "Bar")
                         }));
 
@@ -313,12 +325,14 @@
                                 10,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\NotModified.cs",
                                 12,
                                 "Bar",
                                 0,
+                                "Bar",
                                 "Bar")
                         }));
 
@@ -355,12 +369,14 @@
                                 10,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
+                                "Bar",
                                 "Bar")
                         }));
 
@@ -414,12 +430,14 @@
                                 null,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo"),
                             new CodeAnalysisIssue(
                                 null,
                                 null,
                                 "Bar",
                                 0,
+                                "Bar",
                                 "Bar")
                         }));
 
@@ -473,6 +491,7 @@
                                 10,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo")
                         }));
 
@@ -526,12 +545,14 @@
                                 10,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
                                 12,
                                 "Bar",
                                 0,
+                                "Bar",
                                 "Bar")
                         }));
 
@@ -570,12 +591,14 @@
                                 10,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo"),
                             new CodeAnalysisIssue(
                                 @"src\Cake.Prca.Tests\NotModified.cs",
                                 12,
                                 "Bar",
                                 0,
+                                "Bar",
                                 "Bar")
                         }));
 
@@ -625,6 +648,7 @@
                                 10,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo")
                         }));
 
@@ -658,6 +682,7 @@
                         10,
                         "Foo",
                         0,
+                        "Foo",
                         "Foo");
 
                 var fixture = new PrcaFixture();
@@ -700,6 +725,7 @@
                         null,
                         "Foo",
                         0,
+                        "Foo",
                         "Foo");
 
                 var fixture = new PrcaFixture();
