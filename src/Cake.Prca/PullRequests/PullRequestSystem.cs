@@ -26,8 +26,19 @@
         /// </summary>
         protected ICakeLog Log { get; }
 
+        /// <summary>
+        /// Gets general settings.
+        /// Is set after <see cref="Initialize"/> was called from the core addin.
+        /// </summary>
+        protected ReportCodeAnalysisIssuesToPullRequestSettings PrcaSettings { get; private set; }
+
         /// <inheritdoc/>
-        public abstract void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings);
+        public virtual void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings)
+        {
+            settings.NotNull(nameof(settings));
+
+            this.PrcaSettings = settings;
+        }
 
         /// <inheritdoc/>
         public virtual PrcaCommentFormat GetPreferredCommentFormat()

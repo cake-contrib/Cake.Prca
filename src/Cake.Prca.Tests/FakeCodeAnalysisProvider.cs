@@ -7,7 +7,6 @@
     public class FakeCodeAnalysisProvider : CodeAnalysisProvider
     {
         private readonly List<ICodeAnalysisIssue> issues = new List<ICodeAnalysisIssue>();
-        private PrcaCommentFormat format;
 
         public FakeCodeAnalysisProvider(ICakeLog log)
             : base(log)
@@ -26,18 +25,13 @@
 
         public new ICakeLog Log => base.Log;
 
-        public ReportCodeAnalysisIssuesToPullRequestSettings PrcaSettings { get; private set; }
+        public new ReportCodeAnalysisIssuesToPullRequestSettings PrcaSettings => base.PrcaSettings;
 
-        public PrcaCommentFormat Format => this.format;
-
-        public override void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings)
-        {
-            this.PrcaSettings = settings;
-        }
+        public PrcaCommentFormat Format { get; private set; }
 
         public override IEnumerable<ICodeAnalysisIssue> ReadIssues(PrcaCommentFormat format)
         {
-            this.format = format;
+            this.Format = format;
             return this.issues;
         }
     }

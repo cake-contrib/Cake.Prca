@@ -39,18 +39,13 @@
 
         public new ICakeLog Log => base.Log;
 
-        public ReportCodeAnalysisIssuesToPullRequestSettings PrcaSettings { get; private set; }
+        public new ReportCodeAnalysisIssuesToPullRequestSettings PrcaSettings => base.PrcaSettings;
 
         public IEnumerable<IPrcaDiscussionThread> ThreadsMarkedAsFixed => this.threadsMarkedAsFixed;
 
         public IEnumerable<ICodeAnalysisIssue> PostedIssues => this.postedIssues;
 
         public PrcaCommentFormat CommentFormat { get; set; } = PrcaCommentFormat.PlainText;
-
-        public override void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings)
-        {
-            this.PrcaSettings = settings;
-        }
 
         public override PrcaCommentFormat GetPreferredCommentFormat()
         {
