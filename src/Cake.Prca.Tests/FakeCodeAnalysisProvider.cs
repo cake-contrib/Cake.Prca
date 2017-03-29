@@ -25,6 +25,13 @@
 
         public new ICakeLog Log => base.Log;
 
+        public ReportCodeAnalysisIssuesToPullRequestSettings PrcaSettings { get; private set; }
+
+        public override void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings)
+        {
+            this.PrcaSettings = settings;
+        }
+
         public override IEnumerable<ICodeAnalysisIssue> ReadIssues()
         {
             return this.issues;

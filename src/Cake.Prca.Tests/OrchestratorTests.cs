@@ -79,6 +79,32 @@
         public sealed class TheRunMethod
         {
             [Fact]
+            public void Should_Initialize_Code_Analysis_Provider()
+            {
+                // Given
+                var fixture = new PrcaFixture();
+
+                // When
+                fixture.RunOrchestrator();
+
+                // Then
+                fixture.CodeAnalysisProvider.PrcaSettings.ShouldBe(fixture.Settings);
+            }
+
+            [Fact]
+            public void Should_Initialize_Pull_Request_System()
+            {
+                // Given
+                var fixture = new PrcaFixture();
+
+                // When
+                fixture.RunOrchestrator();
+
+                // Then
+                fixture.PullRequestSystem.PrcaSettings.ShouldBe(fixture.Settings);
+            }
+
+            [Fact]
             public void Should_Read_Correct_Number_Of_Code_Analysis_Issues()
             {
                 // Given

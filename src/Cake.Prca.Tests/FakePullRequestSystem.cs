@@ -39,9 +39,16 @@
 
         public new ICakeLog Log => base.Log;
 
+        public ReportCodeAnalysisIssuesToPullRequestSettings PrcaSettings { get; private set; }
+
         public IEnumerable<IPrcaDiscussionThread> ThreadsMarkedAsFixed => this.threadsMarkedAsFixed;
 
         public IEnumerable<ICodeAnalysisIssue> PostedIssues => this.postedIssues;
+
+        public override void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings)
+        {
+            this.PrcaSettings = settings;
+        }
 
         public override IEnumerable<IPrcaDiscussionThread> FetchActiveDiscussionThreads(string commentSource)
         {

@@ -8,6 +8,12 @@
     public interface ICodeAnalysisProvider
     {
         /// <summary>
+        /// Initializes the code analysis provider.
+        /// </summary>
+        /// <param name="settings">General settings</param>
+        void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings);
+
+        /// <summary>
         /// Gets all code analysis issues.
         /// </summary>
         /// <returns>List of code analysis issues</returns>
