@@ -35,3 +35,5 @@ Come join in the conversation about Cake Pull Request Code Analysis in our Gitte
 ## Contributing
 
 Contributions are welcome. See [Contribution Guidelines].
+
+[Contribution Guidelines]: CONTRIBUTING.md
