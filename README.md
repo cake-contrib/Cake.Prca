@@ -32,20 +32,6 @@ Come join in the conversation about Cake Pull Request Code Analysis in our Gitte
 
 [![Join the chat at https://gitter.im/cake-contrib/Lobby](https://badges.gitter.im/cake-contrib/Lobby.svg)](https://gitter.im/cake-contrib/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Build
+## Contributing
 
-To build this package we are using Cake.
-
-On Windows PowerShell run:
-
-```powershell
-./build
-```
-
-On OSX/Linux run:
-
-```bash
-./build.sh
-```
-
-[BBT Software AG]: https://github.com/BBTSoftwareAG
+Contributions are welcome. See [Contribution Guidelines].
