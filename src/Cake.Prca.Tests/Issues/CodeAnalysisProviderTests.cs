@@ -32,6 +32,36 @@
             }
         }
 
+        public sealed class TheInitializeMethod
+        {
+            [Fact]
+            public void Should_Throw_If_Settings_Are_Null()
+            {
+                // Given
+                var provider = new FakeCodeAnalysisProvider(new FakeLog());
+
+                // When
+                var result = Record.Exception(() => provider.Initialize(null));
+
+                // Then
+                result.IsArgumentNullException("settings");
+            }
+
+            [Fact]
+            public void Should_Set_Settings()
+            {
+                // Given
+                var provider = new FakeCodeAnalysisProvider(new FakeLog());
+                var settings = new ReportCodeAnalysisIssuesToPullRequestSettings(@"c:\foo");
+
+                // When
+                provider.Initialize(settings);
+
+                // Then
+                provider.PrcaSettings.ShouldBe(settings);
+            }
+        }
+
         public sealed class TheReadIssuesMethod
         {
             [Fact]
