@@ -1,5 +1,6 @@
 ﻿namespace Cake.Prca.Issues
 {
+    using System;
     using System.Collections.Generic;
     using Core.Diagnostics;
 
@@ -39,6 +40,22 @@
         }
 
         /// <inheritdoc/>
-        public abstract IEnumerable<ICodeAnalysisIssue> ReadIssues(PrcaCommentFormat format);
+        public IEnumerable<ICodeAnalysisIssue> ReadIssues(PrcaCommentFormat format)
+        {
+            if (this.PrcaSettings == null)
+            {
+                throw new InvalidOperationException("Initialize needs to be called first.");
+            }
+
+            return this.InternalReadIssues(format);
+        }
+
+        /// <summary>
+        /// Gets all code analysis issues.
+        /// Compared to <see cref="ReadIssues"/> it is safe to access <see cref="PrcaSettings"/> from this method.
+        /// </summary>
+        /// <param name="format">Preferred format of the comments.</param>
+        /// <returns>List of code analysis issues</returns>
+        protected abstract IEnumerable<ICodeAnalysisIssue> InternalReadIssues(PrcaCommentFormat format);
     }
 }

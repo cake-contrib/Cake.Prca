@@ -29,7 +29,7 @@
 
         public PrcaCommentFormat Format { get; private set; }
 
-        public override IEnumerable<ICodeAnalysisIssue> ReadIssues(PrcaCommentFormat format)
+        protected override IEnumerable<ICodeAnalysisIssue> InternalReadIssues(PrcaCommentFormat format)
         {
             this.Format = format;
             return this.issues;

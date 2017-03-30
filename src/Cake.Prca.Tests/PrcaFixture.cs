@@ -41,6 +41,8 @@
             IEnumerable<ICodeAnalysisIssue> issues,
             IDictionary<ICodeAnalysisIssue, IEnumerable<IPrcaDiscussionComment>> issueComments)
         {
+            this.PullRequestSystem?.Initialize(this.Settings);
+
             var issueFilterer = new IssueFilterer(this.Log, this.PullRequestSystem, this.Settings);
             return issueFilterer.FilterIssues(issues, issueComments);
         }

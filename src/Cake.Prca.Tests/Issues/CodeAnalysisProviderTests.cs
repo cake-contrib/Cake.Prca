@@ -31,5 +31,21 @@
                 provider.Log.ShouldBe(log);
             }
         }
+
+        public sealed class TheReadIssuesMethod
+        {
+            [Fact]
+            public void Should_Throw_If_PrcaSettings_Is_Null()
+            {
+                // Given
+                var provider = new FakeCodeAnalysisProvider(new FakeLog());
+
+                // When
+                var result = Record.Exception(() => provider.ReadIssues(PrcaCommentFormat.PlainText));
+
+                // Then
+                result.IsInvalidOperationException("Initialize needs to be called first.");
+            }
+        }
     }
 }
