@@ -27,12 +27,11 @@
         ///     ReportCodeAnalysisIssuesToPullRequest(
         ///         MsBuildCodeAnalysisFromFilePath(
         ///             @"C:\build\msbuild.log",
-        ///             MsBuildXmlFileLoggerFormat,
-        ///             new DirectoryPath("c:\repo")),
+        ///             MsBuildXmlFileLoggerFormat),
         ///         TfsPullRequests(
         ///             new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"),
         ///             "refs/heads/feature/myfeature",
-        ///             PrcaAuthenticationNtlm()),
+        ///             TfsAuthenticationNtlm()),
         ///         new DirectoryPath("c:\repo"));
         /// ]]>
         /// </code>
@@ -71,17 +70,15 @@
         ///         {
         ///             MsBuildCodeAnalysisFromFilePath(
         ///                 @"C:\build\msbuild.log",
-        ///                 MsBuildXmlFileLoggerFormat,
-        ///                 new DirectoryPath("c:\repo")),
+        ///                 MsBuildXmlFileLoggerFormat),
         ///             InspectCodeFromFilePath(
         ///                 @"C:\build\inspectcode.log",
-        ///                 MsBuildXmlFileLoggerFormat,
-        ///                 new DirectoryPath("c:\repo"))
+        ///                 MsBuildXmlFileLoggerFormat)
         ///         },
         ///         TfsPullRequests(
         ///             new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"),
         ///             "refs/heads/feature/myfeature",
-        ///             PrcaAuthenticationNtlm()),
+        ///             TfsAuthenticationNtlm()),
         ///         new DirectoryPath("c:\repo"));
         /// ]]>
         /// </code>
@@ -127,12 +124,11 @@
         ///     ReportCodeAnalysisIssuesToPullRequest(
         ///         MsBuildCodeAnalysisFromFilePath(
         ///             @"C:\build\msbuild.log",
-        ///             MsBuildXmlFileLoggerFormat,
-        ///             new DirectoryPath("c:\repo")),
+        ///             MsBuildXmlFileLoggerFormat),
         ///         TfsPullRequests(
         ///             new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"),
         ///             "refs/heads/feature/myfeature",
-        ///             PrcaAuthenticationNtlm()),
+        ///             TfsAuthenticationNtlm()),
         ///         settings));
         /// ]]>
         /// </code>
@@ -177,17 +173,15 @@
         ///         {
         ///             MsBuildCodeAnalysisFromFilePath(
         ///                 @"C:\build\msbuild.log",
-        ///                 MsBuildXmlFileLoggerFormat,
-        ///                 new DirectoryPath("c:\repo")),
+        ///                 MsBuildXmlFileLoggerFormat),
         ///             InspectCodeFromFilePath(
         ///                 @"C:\build\inspectcode.log",
-        ///                 MsBuildXmlFileLoggerFormat,
-        ///                 new DirectoryPath("c:\repo"))
+        ///                 MsBuildXmlFileLoggerFormat)
         ///         },
         ///         TfsPullRequests(
         ///             new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"),
         ///             "refs/heads/feature/myfeature",
-        ///             PrcaAuthenticationNtlm()),
+        ///             TfsAuthenticationNtlm()),
         ///         settings));
         /// ]]>
         /// </code>
