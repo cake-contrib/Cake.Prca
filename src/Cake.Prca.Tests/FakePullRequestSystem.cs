@@ -16,6 +16,7 @@
         public FakePullRequestSystem(ICakeLog log)
             : base(log)
         {
+            this.Initialize();
         }
 
         public FakePullRequestSystem(
@@ -35,6 +36,8 @@
 
             // ReSharper disable once PossibleMultipleEnumeration
             this.modifiedFiles.AddRange(modifiedFiles);
+
+            this.Initialize();
         }
 
         public new ICakeLog Log => base.Log;
@@ -45,7 +48,7 @@
 
         public IEnumerable<ICodeAnalysisIssue> PostedIssues => this.postedIssues;
 
-        public PrcaCommentFormat CommentFormat { get; set; } = PrcaCommentFormat.PlainText;
+        public PrcaCommentFormat CommentFormat { get; set; }
 
         public override PrcaCommentFormat GetPreferredCommentFormat()
         {
@@ -78,6 +81,11 @@
 
             // ReSharper disable once PossibleMultipleEnumeration
             this.postedIssues.AddRange(issues);
+        }
+
+        private void Initialize()
+        {
+            this.CommentFormat = base.GetPreferredCommentFormat();
         }
     }
 }
