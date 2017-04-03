@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CakeAliasConstants.cs" />
+    <Compile Include="Issues\BaseRuleDescription.cs" />
+    <Compile Include="Issues\BaseRuleUrlResolver.cs" />
     <Compile Include="Issues\CodeAnalysisIssue{T}.cs" />
     <Compile Include="Issues\StringPathExtensions.cs" />
     <Compile Include="PrcaArgumentChecks.cs" />
