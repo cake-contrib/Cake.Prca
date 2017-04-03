@@ -1,6 +1,8 @@
 ﻿namespace Cake.Prca.Issues
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Base class for retrieving an URL linking to a site containing help for a rule.
@@ -9,6 +11,34 @@
     public abstract class BaseRuleUrlResolver<T>
         where T : BaseRuleDescription, new()
     {
+        private readonly List<Tuple<Func<T, Uri>, int>> registeredUrlResolver = new List<Tuple<Func<T, Uri>, int>>();
+
+        /// <summary>
+        /// Registers a new resolver with default priority of <code>0</code>.
+        /// </summary>
+        /// <param name="resolver">Resolver which returns an <see cref="Uri"/> linking to a site
+        /// containing help for a specific <see cref="BaseRuleDescription"/>.</param>
+        public void AddUrlResolver(Func<T, Uri> resolver)
+        {
+            resolver.NotNull(nameof(resolver));
+
+            this.AddUrlResolver(resolver, 0);
+        }
+
+        /// <summary>
+        /// Registers a new resolver which with a specific priority.
+        /// </summary>
+        /// <param name="resolver">Resolver which returns an <see cref="Uri"/> linking to a site
+        /// containing help for a specific <see cref="BaseRuleDescription"/>.</param>
+        /// <param name="priority">Priority of the resolver. Resolver with a higher priority are considered
+        /// first during resolving of the URL.</param>
+        public void AddUrlResolver(Func<T, Uri> resolver, int priority)
+        {
+            resolver.NotNull(nameof(resolver));
+
+            this.registeredUrlResolver.Add(new Tuple<Func<T, Uri>, int>(resolver, priority));
+        }
+
         /// <summary>
         /// Returns an URL linking to a site describing a specific rule.
         /// </summary>
@@ -20,7 +50,16 @@
             rule.NotNullOrWhiteSpace(nameof(rule));
 
             var ruleDescription = new T { Rule = rule };
-            return !this.TryGetRuleDescription(rule, ruleDescription) ? null : this.GetRuleUri(ruleDescription);
+            if (!this.TryGetRuleDescription(rule, ruleDescription))
+            {
+                return null;
+            }
+
+            return
+                this.registeredUrlResolver
+                    .OrderByDescending(x => x.Item2)
+                    .Select(x => x.Item1(ruleDescription))
+                    .FirstOrDefault(x => x != null);
         }
 
         /// <summary>
@@ -30,13 +69,5 @@
         /// <param name="ruleDescription">Description of the rule.</param>
         /// <returns><c>true</c> if rule could by parsed successfully, otherwise <c>false</c>.</returns>
         protected abstract bool TryGetRuleDescription(string rule, T ruleDescription);
-
-        /// <summary>
-        /// Gets a <see cref="Uri"/> linking to a site containing help for a
-        /// specific <see cref="BaseRuleDescription"/>.
-        /// </summary>
-        /// <param name="ruleDescription">Description of the rule.</param>
-        /// <returns>Uri linking to a site containing help for the rule.</returns>
-        protected abstract Uri GetRuleUri(T ruleDescription);
     }
 }

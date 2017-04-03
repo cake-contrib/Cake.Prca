@@ -10,10 +10,5 @@
             ruleDescription = new FakeRuleDescription { Rule = rule };
             return true;
         }
-
-        protected override Uri GetRuleUri(FakeRuleDescription ruleDescription)
-        {
-            return new Uri("http://google.com/");
-        }
     }
 }
