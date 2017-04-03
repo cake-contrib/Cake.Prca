@@ -65,6 +65,22 @@
             }
         }
 
+        public sealed class TheGetPreferredCommentFormatMethod
+        {
+            [Fact]
+            public void Should_Return_PlainText()
+            {
+                // Given
+                var prSystem = new FakePullRequestSystem(new FakeLog());
+
+                // When
+                var result = prSystem.GetPreferredCommentFormat();
+
+                // Then
+                result.ShouldBe(PrcaCommentFormat.PlainText);
+            }
+        }
+
         public sealed class TheFetchActiveDiscussionThreadsMethod
         {
             [Fact]
