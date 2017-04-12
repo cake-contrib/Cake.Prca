@@ -73,6 +73,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeRuleUrlResolver.cs" />
+    <Compile Include="FakeRuleDescription.cs" />
     <Compile Include="Issues\CodeAnalysisIssueOfTTests.cs" />
     <Compile Include="Issues\CodeAnalysisProviderTests.cs" />
     <Compile Include="ExceptionAssertExtensions.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="FakePullRequestSystem.cs" />
     <Compile Include="IssueFiltererTests.cs" />
     <Compile Include="Issues\CodeAnalysisIssueTests.cs" />
+    <Compile Include="Issues\BaseRuleUrlResolverTests.cs" />
     <Compile Include="OrchestratorTests.cs" />
     <Compile Include="PrcaArgumentChecksTests.cs" />
     <Compile Include="PrcaFixture.cs" />
