@@ -25,8 +25,13 @@
 
         public new ICakeLog Log => base.Log;
 
-        public override IEnumerable<ICodeAnalysisIssue> ReadIssues()
+        public new ReportCodeAnalysisIssuesToPullRequestSettings PrcaSettings => base.PrcaSettings;
+
+        public PrcaCommentFormat Format { get; private set; }
+
+        protected override IEnumerable<ICodeAnalysisIssue> InternalReadIssues(PrcaCommentFormat format)
         {
+            this.Format = format;
             return this.issues;
         }
     }

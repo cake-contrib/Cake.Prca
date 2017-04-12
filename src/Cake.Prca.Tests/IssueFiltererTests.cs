@@ -111,6 +111,7 @@
                                 10,
                                 "Foo",
                                 0,
+                                "Foo",
                                 "Foo")
                         },
                         new Dictionary<ICodeAnalysisIssue, IEnumerable<IPrcaDiscussionComment>>()));

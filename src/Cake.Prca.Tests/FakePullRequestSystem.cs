@@ -16,6 +16,7 @@
         public FakePullRequestSystem(ICakeLog log)
             : base(log)
         {
+            this.Initialize();
         }
 
         public FakePullRequestSystem(
@@ -35,25 +36,36 @@
 
             // ReSharper disable once PossibleMultipleEnumeration
             this.modifiedFiles.AddRange(modifiedFiles);
+
+            this.Initialize();
         }
 
         public new ICakeLog Log => base.Log;
+
+        public new ReportCodeAnalysisIssuesToPullRequestSettings PrcaSettings => base.PrcaSettings;
 
         public IEnumerable<IPrcaDiscussionThread> ThreadsMarkedAsFixed => this.threadsMarkedAsFixed;
 
         public IEnumerable<ICodeAnalysisIssue> PostedIssues => this.postedIssues;
 
-        public override IEnumerable<IPrcaDiscussionThread> FetchActiveDiscussionThreads(string commentSource)
+        public PrcaCommentFormat CommentFormat { get; set; }
+
+        public override PrcaCommentFormat GetPreferredCommentFormat()
+        {
+            return this.CommentFormat;
+        }
+
+        protected override IEnumerable<IPrcaDiscussionThread> InternalFetchActiveDiscussionThreads(string commentSource)
         {
             return this.discussionThreads;
         }
 
-        public override IEnumerable<FilePath> GetModifiedFilesInPullRequest()
+        protected override IEnumerable<FilePath> InternalGetModifiedFilesInPullRequest()
         {
             return this.modifiedFiles;
         }
 
-        public override void MarkThreadsAsFixed(IEnumerable<IPrcaDiscussionThread> threads)
+        protected override void InternalMarkThreadsAsFixed(IEnumerable<IPrcaDiscussionThread> threads)
         {
             // ReSharper disable once PossibleMultipleEnumeration
             threads.NotNull(nameof(threads));
@@ -62,13 +74,18 @@
             this.threadsMarkedAsFixed.AddRange(threads);
         }
 
-        public override void PostDiscussionThreads(IEnumerable<ICodeAnalysisIssue> issues, string commentSource)
+        protected override void InternalPostDiscussionThreads(IEnumerable<ICodeAnalysisIssue> issues, string commentSource)
         {
             // ReSharper disable once PossibleMultipleEnumeration
             issues.NotNull(nameof(issues));
 
             // ReSharper disable once PossibleMultipleEnumeration
             this.postedIssues.AddRange(issues);
+        }
+
+        private void Initialize()
+        {
+            this.CommentFormat = base.GetPreferredCommentFormat();
         }
     }
 }

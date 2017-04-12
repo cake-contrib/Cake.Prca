@@ -11,6 +11,18 @@
     public interface IPullRequestSystem
     {
         /// <summary>
+        /// Initializes the code analysis provider.
+        /// </summary>
+        /// <param name="settings">General settings</param>
+        void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings);
+
+        /// <summary>
+        /// Returns the preferred format for pull request comments.
+        /// </summary>
+        /// <returns>The preferred format for pull request comments</returns>
+        PrcaCommentFormat GetPreferredCommentFormat();
+
+        /// <summary>
         /// Returns a list of all active discussion threads.
         /// </summary>
         /// <param name="commentSource">Value used to indicate threads created by this addin.</param>

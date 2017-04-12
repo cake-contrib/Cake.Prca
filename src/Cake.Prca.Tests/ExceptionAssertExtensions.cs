@@ -23,6 +23,12 @@
             Assert.Equal(parameterName, ((ArgumentOutOfRangeException)exception).ParamName);
         }
 
+        public static void IsInvalidOperationException(this Exception exception, string message)
+        {
+            Assert.IsType<InvalidOperationException>(exception);
+            Assert.Equal(message, exception.Message);
+        }
+
         public static void IsPrcaException(this Exception exception, string message)
         {
             Assert.IsType<PrcaException>(exception);

@@ -15,7 +15,7 @@
     internal class Orchestrator
     {
         private readonly ICakeLog log;
-        private readonly ICodeAnalysisProvider codeAnalysisProvider;
+        private readonly List<ICodeAnalysisProvider> codeAnalysisProviders = new List<ICodeAnalysisProvider>();
         private readonly IPullRequestSystem pullRequestSystem;
         private readonly ReportCodeAnalysisIssuesToPullRequestSettings settings;
 
@@ -23,24 +23,28 @@
         /// Initializes a new instance of the <see cref="Orchestrator"/> class.
         /// </summary>
         /// <param name="log">Cake log instance.</param>
-        /// <param name="codeAnalysisProvider">Code analysis issue provider.</param>
+        /// <param name="codeAnalysisProviders">List of code analysis issue providers to use.</param>
         /// <param name="pullRequestSystem">Object for accessing pull request system.</param>
         /// <param name="settings">Settings.</param>
         public Orchestrator(
             ICakeLog log,
-            ICodeAnalysisProvider codeAnalysisProvider,
+            IEnumerable<ICodeAnalysisProvider> codeAnalysisProviders,
             IPullRequestSystem pullRequestSystem,
             ReportCodeAnalysisIssuesToPullRequestSettings settings)
         {
             log.NotNull(nameof(log));
-            codeAnalysisProvider.NotNull(nameof(codeAnalysisProvider));
             pullRequestSystem.NotNull(nameof(pullRequestSystem));
             settings.NotNull(nameof(settings));
 
+            // ReSharper disable once PossibleMultipleEnumeration
+            codeAnalysisProviders.NotNullOrEmptyOrEmptyElement(nameof(codeAnalysisProviders));
+
             this.log = log;
-            this.codeAnalysisProvider = codeAnalysisProvider;
             this.pullRequestSystem = pullRequestSystem;
             this.settings = settings;
+
+            // ReSharper disable once PossibleMultipleEnumeration
+            this.codeAnalysisProviders.AddRange(codeAnalysisProviders);
         }
 
         /// <summary>
@@ -50,7 +54,27 @@
         /// </summary>
         public void Run()
         {
-            var issues = this.codeAnalysisProvider.ReadIssues().ToList();
+            this.log.Verbose("Initialize pull request system...");
+            this.pullRequestSystem.Initialize(this.settings);
+
+            var format = this.pullRequestSystem.GetPreferredCommentFormat();
+            this.log.Verbose("Pull request system prefers comments in {0} format.", format);
+
+            var issues = new List<ICodeAnalysisIssue>();
+            foreach (var codeAnalysisProvider in this.codeAnalysisProviders)
+            {
+                this.log.Verbose("Initialize code analysis provider {0}...", codeAnalysisProvider.GetType().Name);
+                codeAnalysisProvider.Initialize(this.settings);
+
+                this.log.Verbose("Reading issues from {0}...", codeAnalysisProvider.GetType().Name);
+                var currentIssues = codeAnalysisProvider.ReadIssues(format).ToList();
+                this.log.Verbose(
+                    "Found {0} issues using issue provider {1}...",
+                    currentIssues.Count,
+                    codeAnalysisProvider.GetType().Name);
+                issues.AddRange(currentIssues);
+            }
+
             this.log.Information("Processing {0} new issues", issues.Count);
 
             this.PostAndResolveComments(issues);

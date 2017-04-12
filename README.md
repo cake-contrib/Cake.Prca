@@ -16,7 +16,7 @@ More about Cake at http://cakebuild.net
 
 |Develop|Master|
 |:--:|:--:|
-|[![Build status](https://ci.appveyor.com/api/projects/status/xxx/branch/develop?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-prca/branch/develop)|[![Build status](https://ci.appveyor.com/api/projects/status/xxx/branch/develop?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-prca/branch/master)|
+|[![Build status](https://ci.appveyor.com/api/projects/status/vt7f409g3t0hei1x/branch/develop?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-prca/branch/develop)|[![Build status](https://ci.appveyor.com/api/projects/status/vt7f409g3t0hei1x/branch/develop?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-prca/branch/master)|
 
 ## Code Coverage
 
@@ -32,20 +32,8 @@ Come join in the conversation about Cake Pull Request Code Analysis in our Gitte
 
 [![Join the chat at https://gitter.im/cake-contrib/Lobby](https://badges.gitter.im/cake-contrib/Lobby.svg)](https://gitter.im/cake-contrib/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Build
+## Contributing
 
-To build this package we are using Cake.
+Contributions are welcome. See [Contribution Guidelines].
 
-On Windows PowerShell run:
-
-```powershell
-./build
-```
-
-On OSX/Linux run:
-
-```bash
-./build.sh
-```
-
-[BBT Software AG]: https://github.com/BBTSoftwareAG
+[Contribution Guidelines]: CONTRIBUTING.md
