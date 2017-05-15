@@ -22,6 +22,7 @@
         /// <param name="codeAnalysisProvider">The provider for code analysis issues.</param>
         /// <param name="pullRequestSystem">The pull request system.</param>
         /// <param name="repositoryRoot">Root path of the repository.</param>
+        /// <returns>Issues which were posted to the pull request.</returns>
         /// <example>
         /// <para>Report code analysis issues reported as MsBuild warnings to a TFS pull request:</para>
         /// <code>
@@ -39,7 +40,7 @@
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static void ReportCodeAnalysisIssuesToPullRequest(
+        public static IEnumerable<ICodeAnalysisIssue> ReportCodeAnalysisIssuesToPullRequest(
             this ICakeContext context,
             ICodeAnalysisProvider codeAnalysisProvider,
             IPullRequestSystem pullRequestSystem,
@@ -50,10 +51,11 @@
             pullRequestSystem.NotNull(nameof(pullRequestSystem));
             repositoryRoot.NotNull(nameof(repositoryRoot));
 
-            context.ReportCodeAnalysisIssuesToPullRequest(
-                codeAnalysisProvider,
-                pullRequestSystem,
-                new ReportCodeAnalysisIssuesToPullRequestSettings(repositoryRoot));
+            return
+                context.ReportCodeAnalysisIssuesToPullRequest(
+                    codeAnalysisProvider,
+                    pullRequestSystem,
+                    new ReportCodeAnalysisIssuesToPullRequestSettings(repositoryRoot));
         }
 
         /// <summary>
@@ -63,6 +65,7 @@
         /// <param name="codeAnalysisProviders">The list of provider for code analysis issues.</param>
         /// <param name="pullRequestSystem">The pull request system.</param>
         /// <param name="repositoryRoot">Root path of the repository.</param>
+        /// <returns>Issues which were posted to the pull request.</returns>
         /// <example>
         /// <para>Report code analysis issues reported as MsBuild warnings to a TFS pull request:</para>
         /// <code>
@@ -86,7 +89,7 @@
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static void ReportCodeAnalysisIssuesToPullRequest(
+        public static IEnumerable<ICodeAnalysisIssue> ReportCodeAnalysisIssuesToPullRequest(
             this ICakeContext context,
             IEnumerable<ICodeAnalysisProvider> codeAnalysisProviders,
             IPullRequestSystem pullRequestSystem,
@@ -100,10 +103,11 @@
             codeAnalysisProviders.NotNullOrEmptyOrEmptyElement(nameof(codeAnalysisProviders));
 
             // ReSharper disable once PossibleMultipleEnumeration
-            context.ReportCodeAnalysisIssuesToPullRequest(
-                codeAnalysisProviders,
-                pullRequestSystem,
-                new ReportCodeAnalysisIssuesToPullRequestSettings(repositoryRoot));
+            return
+                context.ReportCodeAnalysisIssuesToPullRequest(
+                    codeAnalysisProviders,
+                    pullRequestSystem,
+                    new ReportCodeAnalysisIssuesToPullRequestSettings(repositoryRoot));
         }
 
         /// <summary>
@@ -113,6 +117,7 @@
         /// <param name="codeAnalysisProvider">The provider for code analysis issues.</param>
         /// <param name="pullRequestSystem">The pull request system.</param>
         /// <param name="settings">The settings.</param>
+        /// <returns>Issues which were posted to the pull request.</returns>
         /// <example>
         /// <para>Report code analysis issues reported as MsBuild warnings to a TFS pull request and limit number of comments to ten:</para>
         /// <code>
@@ -136,7 +141,7 @@
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static void ReportCodeAnalysisIssuesToPullRequest(
+        public static IEnumerable<ICodeAnalysisIssue> ReportCodeAnalysisIssuesToPullRequest(
             this ICakeContext context,
             ICodeAnalysisProvider codeAnalysisProvider,
             IPullRequestSystem pullRequestSystem,
@@ -147,10 +152,11 @@
             pullRequestSystem.NotNull(nameof(pullRequestSystem));
             settings.NotNull(nameof(settings));
 
-            context.ReportCodeAnalysisIssuesToPullRequest(
-                new List<ICodeAnalysisProvider> { codeAnalysisProvider },
-                pullRequestSystem,
-                settings);
+            return
+                context.ReportCodeAnalysisIssuesToPullRequest(
+                    new List<ICodeAnalysisProvider> { codeAnalysisProvider },
+                    pullRequestSystem,
+                    settings);
         }
 
         /// <summary>
@@ -160,6 +166,7 @@
         /// <param name="codeAnalysisProviders">The list of provider for code analysis issues.</param>
         /// <param name="pullRequestSystem">The pull request system.</param>
         /// <param name="settings">The settings.</param>
+        /// <returns>Issues which were posted to the pull request.</returns>
         /// <example>
         /// <para>Report code analysis issues reported as MsBuild warnings to a TFS pull request and limit number of comments to ten:</para>
         /// <code>
@@ -189,7 +196,7 @@
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static void ReportCodeAnalysisIssuesToPullRequest(
+        public static IEnumerable<ICodeAnalysisIssue> ReportCodeAnalysisIssuesToPullRequest(
             this ICakeContext context,
             IEnumerable<ICodeAnalysisProvider> codeAnalysisProviders,
             IPullRequestSystem pullRequestSystem,
@@ -209,7 +216,7 @@
                     codeAnalysisProviders,
                     pullRequestSystem,
                     settings);
-            orchestrator.Run();
+            return orchestrator.Run();
         }
     }
 }

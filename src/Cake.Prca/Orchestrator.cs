@@ -52,7 +52,8 @@
         /// Posts new issues, ignoring duplicate comments and resolves comments that were open in an old iteration
         /// of the pull request.
         /// </summary>
-        public void Run()
+        /// <returns>Issues which were posted to the pull request.</returns>
+        public IEnumerable<ICodeAnalysisIssue> Run()
         {
             this.log.Verbose("Initialize pull request system...");
             this.pullRequestSystem.Initialize(this.settings);
@@ -78,6 +79,8 @@
             this.log.Information("Processing {0} new issues", issues.Count);
 
             this.PostAndResolveComments(issues);
+
+            return issues;
         }
 
         /// <summary>
