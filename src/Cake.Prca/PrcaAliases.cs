@@ -11,6 +11,8 @@
     /// Contains functionality related to writing code analysis issues to pull requests.
     /// </summary>
     [CakeAliasCategory(CakeAliasConstants.MainCakeAliasCategory)]
+    [CakeNamespaceImport("Cake.Prca.Issues")]
+    [CakeNamespaceImport("Cake.Prca.PullRequests")]
     public static class PrcaAliases
     {
         /// <summary>
