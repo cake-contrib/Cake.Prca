@@ -14,7 +14,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright © 2017 BBT Software AG, Root/Zermatt, Switzerland</copyright>
     <tags>Cake Script PullRequest CodeAnalysis Linting</tags>
-    <releaseNotes>https://github.com/cake-contrib/Cake.Prca/releases/tag/0.3.0</releaseNotes>
+    <releaseNotes>https://github.com/cake-contrib/Cake.Prca/releases/tag/0.3.1</releaseNotes>
     <dependencies>
       <dependency id="Cake.Core" version="0.16.2" />
     </dependencies>
