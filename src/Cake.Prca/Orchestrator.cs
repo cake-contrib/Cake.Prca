@@ -52,8 +52,8 @@
         /// Posts new issues, ignoring duplicate comments and resolves comments that were open in an old iteration
         /// of the pull request.
         /// </summary>
-        /// <returns>Issues which were posted to the pull request.</returns>
-        public IEnumerable<ICodeAnalysisIssue> Run()
+        /// <returns>Information about the reported and written issues.</returns>
+        public PrcaResult Run()
         {
             this.log.Verbose("Initialize pull request system...");
             this.pullRequestSystem.Initialize(this.settings);
@@ -78,9 +78,9 @@
 
             this.log.Information("Processing {0} new issues", issues.Count);
 
-            this.PostAndResolveComments(issues);
+            var postedIssues = this.PostAndResolveComments(issues);
 
-            return issues;
+            return new PrcaResult(issues, postedIssues);
         }
 
         /// <summary>
@@ -105,7 +105,8 @@
         /// of the pull request.
         /// </summary>
         /// <param name="issues">Issues to post.</param>
-        private void PostAndResolveComments(IList<ICodeAnalysisIssue> issues)
+        /// <returns>Issues reported to the pull request.</returns>
+        private IEnumerable<ICodeAnalysisIssue> PostAndResolveComments(IList<ICodeAnalysisIssue> issues)
         {
             issues.NotNull(nameof(issues));
 
@@ -121,7 +122,7 @@
             if (!issues.Any())
             {
                 this.log.Information("No new issues were posted");
-                return;
+                return new List<ICodeAnalysisIssue>();
             }
 
             // Remove issues that cannot be posted
@@ -151,6 +152,8 @@
             {
                 this.log.Information("All issues were filtered. Nothing new to post.");
             }
+
+            return remainingIssues;
         }
 
         /// <summary>
