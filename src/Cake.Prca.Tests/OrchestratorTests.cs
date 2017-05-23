@@ -1,6 +1,7 @@
 ﻿namespace Cake.Prca.Tests
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Core.IO;
     using Prca.Issues;
     using Prca.PullRequests;
@@ -781,6 +782,58 @@
                     x =>
                         x.Message ==
                             $"Posting 1 issue(s):\n  Rule: {issueToPost.Rule} Line: {issueToPost.Line} File: {issueToPost.AffectedFileRelativePath}");
+            }
+
+            [Fact]
+            public void Should_Return_Correct_Values()
+            {
+                // Given
+                var reportedIssue =
+                    new CodeAnalysisIssue(
+                        @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                        10,
+                        "Foo",
+                        0,
+                        "Foo",
+                        "Foo");
+                var postedIssue =
+                    new CodeAnalysisIssue(
+                        @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                        10,
+                        "Foo",
+                        0,
+                        "Foo",
+                        "Foo");
+                var fixture = new PrcaFixture();
+                fixture.CodeAnalysisProviders.Clear();
+                fixture.CodeAnalysisProviders.Add(
+                    new FakeCodeAnalysisProvider(
+                        fixture.Log,
+                        new List<ICodeAnalysisIssue>
+                        {
+                            postedIssue, reportedIssue
+                        }));
+
+                fixture.PullRequestSystem =
+                    new FakePullRequestSystem(
+                        fixture.Log,
+                        new List<IPrcaDiscussionThread>(),
+                        new List<FilePath>
+                        {
+                            new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
+                        });
+
+                fixture.Settings.MaxIssuesToPost = 1;
+
+                // When
+                var result = fixture.RunOrchestrator();
+
+                // Then
+                result.ReportedIssues.Count().ShouldBe(2);
+                result.ReportedIssues.ShouldContain(reportedIssue);
+                result.ReportedIssues.ShouldContain(postedIssue);
+                result.PostedIssues.Count().ShouldBe(1);
+                result.PostedIssues.ShouldContain(postedIssue);
             }
         }
     }
