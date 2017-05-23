@@ -26,7 +26,7 @@
 
         public ReportCodeAnalysisIssuesToPullRequestSettings Settings { get; set; }
 
-        public void RunOrchestrator()
+        public PrcaResult RunOrchestrator()
         {
             var orchestrator =
                 new Orchestrator(
@@ -34,7 +34,7 @@
                     this.CodeAnalysisProviders,
                     this.PullRequestSystem,
                     this.Settings);
-            orchestrator.Run();
+            return orchestrator.Run();
         }
 
         public IEnumerable<ICodeAnalysisIssue> FilterIssues(

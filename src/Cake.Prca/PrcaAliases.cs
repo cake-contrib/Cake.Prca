@@ -22,7 +22,7 @@
         /// <param name="codeAnalysisProvider">The provider for code analysis issues.</param>
         /// <param name="pullRequestSystem">The pull request system.</param>
         /// <param name="repositoryRoot">Root path of the repository.</param>
-        /// <returns>Issues which were posted to the pull request.</returns>
+        /// <returns>Information about the reported and written issues.</returns>
         /// <example>
         /// <para>Report code analysis issues reported as MsBuild warnings to a TFS pull request:</para>
         /// <code>
@@ -40,7 +40,7 @@
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static IEnumerable<ICodeAnalysisIssue> ReportCodeAnalysisIssuesToPullRequest(
+        public static PrcaResult ReportCodeAnalysisIssuesToPullRequest(
             this ICakeContext context,
             ICodeAnalysisProvider codeAnalysisProvider,
             IPullRequestSystem pullRequestSystem,
@@ -65,7 +65,7 @@
         /// <param name="codeAnalysisProviders">The list of provider for code analysis issues.</param>
         /// <param name="pullRequestSystem">The pull request system.</param>
         /// <param name="repositoryRoot">Root path of the repository.</param>
-        /// <returns>Issues which were posted to the pull request.</returns>
+        /// <returns>Information about the reported and written issues.</returns>
         /// <example>
         /// <para>Report code analysis issues reported as MsBuild warnings to a TFS pull request:</para>
         /// <code>
@@ -89,7 +89,7 @@
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static IEnumerable<ICodeAnalysisIssue> ReportCodeAnalysisIssuesToPullRequest(
+        public static PrcaResult ReportCodeAnalysisIssuesToPullRequest(
             this ICakeContext context,
             IEnumerable<ICodeAnalysisProvider> codeAnalysisProviders,
             IPullRequestSystem pullRequestSystem,
@@ -117,7 +117,7 @@
         /// <param name="codeAnalysisProvider">The provider for code analysis issues.</param>
         /// <param name="pullRequestSystem">The pull request system.</param>
         /// <param name="settings">The settings.</param>
-        /// <returns>Issues which were posted to the pull request.</returns>
+        /// <returns>Information about the reported and written issues.</returns>
         /// <example>
         /// <para>Report code analysis issues reported as MsBuild warnings to a TFS pull request and limit number of comments to ten:</para>
         /// <code>
@@ -141,7 +141,7 @@
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static IEnumerable<ICodeAnalysisIssue> ReportCodeAnalysisIssuesToPullRequest(
+        public static PrcaResult ReportCodeAnalysisIssuesToPullRequest(
             this ICakeContext context,
             ICodeAnalysisProvider codeAnalysisProvider,
             IPullRequestSystem pullRequestSystem,
@@ -166,7 +166,7 @@
         /// <param name="codeAnalysisProviders">The list of provider for code analysis issues.</param>
         /// <param name="pullRequestSystem">The pull request system.</param>
         /// <param name="settings">The settings.</param>
-        /// <returns>Issues which were posted to the pull request.</returns>
+        /// <returns>Information about the reported and written issues.</returns>
         /// <example>
         /// <para>Report code analysis issues reported as MsBuild warnings to a TFS pull request and limit number of comments to ten:</para>
         /// <code>
@@ -196,7 +196,7 @@
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static IEnumerable<ICodeAnalysisIssue> ReportCodeAnalysisIssuesToPullRequest(
+        public static PrcaResult ReportCodeAnalysisIssuesToPullRequest(
             this ICakeContext context,
             IEnumerable<ICodeAnalysisProvider> codeAnalysisProviders,
             IPullRequestSystem pullRequestSystem,
