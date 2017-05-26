@@ -63,6 +63,20 @@
                 // Then
                 prSystem.PrcaSettings.ShouldBe(settings);
             }
+
+            [Fact]
+            public void Should_Return_True()
+            {
+                // Given
+                var prSystem = new FakePullRequestSystem(new FakeLog());
+                var settings = new ReportCodeAnalysisIssuesToPullRequestSettings(@"c:\foo");
+
+                // When
+                var result = prSystem.Initialize(settings);
+
+                // Then
+                result.ShouldBe(true);
+            }
         }
 
         public sealed class TheGetPreferredCommentFormatMethod

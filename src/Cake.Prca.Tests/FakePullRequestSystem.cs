@@ -50,9 +50,18 @@
 
         public PrcaCommentFormat CommentFormat { get; set; }
 
+        public bool ShouldFailOnInitialization { get; set; } = false;
+
         public override PrcaCommentFormat GetPreferredCommentFormat()
         {
             return this.CommentFormat;
+        }
+
+        public override bool Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings)
+        {
+            var result = base.Initialize(settings);
+
+            return result && !this.ShouldFailOnInitialization;
         }
 
         protected override IEnumerable<IPrcaDiscussionThread> InternalFetchActiveDiscussionThreads(string commentSource)

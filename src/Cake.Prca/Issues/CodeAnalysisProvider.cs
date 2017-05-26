@@ -32,11 +32,13 @@
         protected ReportCodeAnalysisIssuesToPullRequestSettings PrcaSettings { get; private set; }
 
         /// <inheritdoc/>
-        public virtual void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings)
+        public virtual bool Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings)
         {
             settings.NotNull(nameof(settings));
 
             this.PrcaSettings = settings;
+
+            return true;
         }
 
         /// <inheritdoc/>

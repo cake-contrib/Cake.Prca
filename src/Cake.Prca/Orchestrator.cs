@@ -55,29 +55,49 @@
         /// <returns>Information about the reported and written issues.</returns>
         public PrcaResult Run()
         {
+            var format = PrcaCommentFormat.Undefined;
+
+            // Initialize pull request system.
             this.log.Verbose("Initialize pull request system...");
-            this.pullRequestSystem.Initialize(this.settings);
+            var pullRequestSystemInitialized = this.pullRequestSystem.Initialize(this.settings);
+            if (pullRequestSystemInitialized)
+            {
+                format = this.pullRequestSystem.GetPreferredCommentFormat();
+                this.log.Verbose("Pull request system prefers comments in {0} format.", format);
+            }
+            else
+            {
+                this.log.Warning("Error initializing the pull request system.");
+            }
 
-            var format = this.pullRequestSystem.GetPreferredCommentFormat();
-            this.log.Verbose("Pull request system prefers comments in {0} format.", format);
-
+            // Initialize issue providers and read issues.
             var issues = new List<ICodeAnalysisIssue>();
             foreach (var codeAnalysisProvider in this.codeAnalysisProviders)
             {
                 this.log.Verbose("Initialize code analysis provider {0}...", codeAnalysisProvider.GetType().Name);
-                codeAnalysisProvider.Initialize(this.settings);
+                if (codeAnalysisProvider.Initialize(this.settings))
+                {
+                    this.log.Verbose("Reading issues from {0}...", codeAnalysisProvider.GetType().Name);
+                    var currentIssues = codeAnalysisProvider.ReadIssues(format).ToList();
+                    this.log.Verbose(
+                        "Found {0} issues using issue provider {1}...",
+                        currentIssues.Count,
+                        codeAnalysisProvider.GetType().Name);
+                    issues.AddRange(currentIssues);
+                }
+                else
+                {
+                    this.log.Warning("Error initializing issue provider {0}.", codeAnalysisProvider.GetType().Name);
+                }
+            }
 
-                this.log.Verbose("Reading issues from {0}...", codeAnalysisProvider.GetType().Name);
-                var currentIssues = codeAnalysisProvider.ReadIssues(format).ToList();
-                this.log.Verbose(
-                    "Found {0} issues using issue provider {1}...",
-                    currentIssues.Count,
-                    codeAnalysisProvider.GetType().Name);
-                issues.AddRange(currentIssues);
+            // Don't process issues if pull request system could not be initialized.
+            if (!pullRequestSystemInitialized)
+            {
+                return new PrcaResult(issues, new List<ICodeAnalysisIssue>());
             }
 
             this.log.Information("Processing {0} new issues", issues.Count);
-
             var postedIssues = this.PostAndResolveComments(issues);
 
             return new PrcaResult(issues, postedIssues);
