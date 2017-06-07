@@ -27,7 +27,7 @@
         /// <para>Report code analysis issues reported as MsBuild warnings to a TFS pull request:</para>
         /// <code>
         /// <![CDATA[
-        ///     ReportCodeAnalysisIssuesToPullRequest(
+        ///     ReportIssuesToPullRequest(
         ///         MsBuildCodeAnalysisFromFilePath(
         ///             @"C:\build\msbuild.log",
         ///             MsBuildXmlFileLoggerFormat),
@@ -40,7 +40,7 @@
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static PrcaResult ReportCodeAnalysisIssuesToPullRequest(
+        public static PrcaResult ReportIssuesToPullRequest(
             this ICakeContext context,
             ICodeAnalysisProvider codeAnalysisProvider,
             IPullRequestSystem pullRequestSystem,
@@ -52,10 +52,10 @@
             repositoryRoot.NotNull(nameof(repositoryRoot));
 
             return
-                context.ReportCodeAnalysisIssuesToPullRequest(
+                context.ReportIssuesToPullRequest(
                     codeAnalysisProvider,
                     pullRequestSystem,
-                    new ReportCodeAnalysisIssuesToPullRequestSettings(repositoryRoot));
+                    new ReportIssuesToPullRequestSettings(repositoryRoot));
         }
 
         /// <summary>
@@ -70,7 +70,7 @@
         /// <para>Report code analysis issues reported as MsBuild warnings to a TFS pull request:</para>
         /// <code>
         /// <![CDATA[
-        ///     ReportCodeAnalysisIssuesToPullRequest(
+        ///     ReportIssuesToPullRequest(
         ///         new List<ICodeAnalysisProvider>
         ///         {
         ///             MsBuildCodeAnalysisFromFilePath(
@@ -89,7 +89,7 @@
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static PrcaResult ReportCodeAnalysisIssuesToPullRequest(
+        public static PrcaResult ReportIssuesToPullRequest(
             this ICakeContext context,
             IEnumerable<ICodeAnalysisProvider> codeAnalysisProviders,
             IPullRequestSystem pullRequestSystem,
@@ -104,10 +104,10 @@
 
             // ReSharper disable once PossibleMultipleEnumeration
             return
-                context.ReportCodeAnalysisIssuesToPullRequest(
+                context.ReportIssuesToPullRequest(
                     codeAnalysisProviders,
                     pullRequestSystem,
-                    new ReportCodeAnalysisIssuesToPullRequestSettings(repositoryRoot));
+                    new ReportIssuesToPullRequestSettings(repositoryRoot));
         }
 
         /// <summary>
@@ -123,12 +123,12 @@
         /// <code>
         /// <![CDATA[
         ///     var settings =
-        ///         new ReportCodeAnalysisIssuesToPullRequestSettings(new DirectoryPath("c:\repo"))
+        ///         new ReportIssuesToPullRequestSettings(new DirectoryPath("c:\repo"))
         ///         {
         ///             MaxIssuesToPost = 10
         ///         };
         ///
-        ///     ReportCodeAnalysisIssuesToPullRequest(
+        ///     ReportIssuesToPullRequest(
         ///         MsBuildCodeAnalysisFromFilePath(
         ///             @"C:\build\msbuild.log",
         ///             MsBuildXmlFileLoggerFormat),
@@ -141,11 +141,11 @@
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static PrcaResult ReportCodeAnalysisIssuesToPullRequest(
+        public static PrcaResult ReportIssuesToPullRequest(
             this ICakeContext context,
             ICodeAnalysisProvider codeAnalysisProvider,
             IPullRequestSystem pullRequestSystem,
-            ReportCodeAnalysisIssuesToPullRequestSettings settings)
+            ReportIssuesToPullRequestSettings settings)
         {
             context.NotNull(nameof(context));
             codeAnalysisProvider.NotNull(nameof(codeAnalysisProvider));
@@ -153,7 +153,7 @@
             settings.NotNull(nameof(settings));
 
             return
-                context.ReportCodeAnalysisIssuesToPullRequest(
+                context.ReportIssuesToPullRequest(
                     new List<ICodeAnalysisProvider> { codeAnalysisProvider },
                     pullRequestSystem,
                     settings);
@@ -172,12 +172,12 @@
         /// <code>
         /// <![CDATA[
         ///     var settings =
-        ///         new ReportCodeAnalysisIssuesToPullRequestSettings(new DirectoryPath("c:\repo"))
+        ///         new ReportIssuesToPullRequestSettings(new DirectoryPath("c:\repo"))
         ///         {
         ///             MaxIssuesToPost = 10
         ///         };
         ///
-        ///     ReportCodeAnalysisIssuesToPullRequest(
+        ///     ReportIssuesToPullRequest(
         ///         new List<ICodeAnalysisProvider>
         ///         {
         ///             MsBuildCodeAnalysisFromFilePath(
@@ -196,11 +196,11 @@
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        public static PrcaResult ReportCodeAnalysisIssuesToPullRequest(
+        public static PrcaResult ReportIssuesToPullRequest(
             this ICakeContext context,
             IEnumerable<ICodeAnalysisProvider> codeAnalysisProviders,
             IPullRequestSystem pullRequestSystem,
-            ReportCodeAnalysisIssuesToPullRequestSettings settings)
+            ReportIssuesToPullRequestSettings settings)
         {
             context.NotNull(nameof(context));
             pullRequestSystem.NotNull(nameof(pullRequestSystem));

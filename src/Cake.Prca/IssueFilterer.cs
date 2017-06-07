@@ -16,7 +16,7 @@
     {
         private readonly ICakeLog log;
         private readonly IPullRequestSystem pullRequestSystem;
-        private readonly ReportCodeAnalysisIssuesToPullRequestSettings settings;
+        private readonly ReportIssuesToPullRequestSettings settings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IssueFilterer"/> class.
@@ -27,7 +27,7 @@
         public IssueFilterer(
             ICakeLog log,
             IPullRequestSystem pullRequestSystem,
-            ReportCodeAnalysisIssuesToPullRequestSettings settings)
+            ReportIssuesToPullRequestSettings settings)
         {
             log.NotNull(nameof(log));
             pullRequestSystem.NotNull(nameof(pullRequestSystem));

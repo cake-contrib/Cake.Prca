@@ -55,7 +55,7 @@
             {
                 // Given
                 var prSystem = new FakePullRequestSystem(new FakeLog());
-                var settings = new ReportCodeAnalysisIssuesToPullRequestSettings(@"c:\foo");
+                var settings = new ReportIssuesToPullRequestSettings(@"c:\foo");
 
                 // When
                 prSystem.Initialize(settings);
@@ -69,7 +69,7 @@
             {
                 // Given
                 var prSystem = new FakePullRequestSystem(new FakeLog());
-                var settings = new ReportCodeAnalysisIssuesToPullRequestSettings(@"c:\foo");
+                var settings = new ReportIssuesToPullRequestSettings(@"c:\foo");
 
                 // When
                 var result = prSystem.Initialize(settings);

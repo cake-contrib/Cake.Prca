@@ -91,6 +91,7 @@
     <Compile Include="Issues\StringPathExtensionsTests.cs" />
     <Compile Include="PullRequests\PrcaDiscussionThreadTests.cs" />
     <Compile Include="PullRequests\PullRequestSystemTests.cs" />
+    <Compile Include="ReportIssuesToPullRequestSettingsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cake.Prca\Cake.Prca.csproj">

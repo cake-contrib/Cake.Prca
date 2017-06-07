@@ -42,7 +42,7 @@
 
         public new ICakeLog Log => base.Log;
 
-        public new ReportCodeAnalysisIssuesToPullRequestSettings PrcaSettings => base.PrcaSettings;
+        public new ReportIssuesToPullRequestSettings PrcaSettings => base.PrcaSettings;
 
         public IEnumerable<IPrcaDiscussionThread> ThreadsMarkedAsFixed => this.threadsMarkedAsFixed;
 
@@ -57,7 +57,7 @@
             return this.CommentFormat;
         }
 
-        public override bool Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings)
+        public override bool Initialize(ReportIssuesToPullRequestSettings settings)
         {
             var result = base.Initialize(settings);
 

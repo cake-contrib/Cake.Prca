@@ -14,7 +14,7 @@
             this.CodeAnalysisProviders = new List<FakeCodeAnalysisProvider> { new FakeCodeAnalysisProvider(this.Log) };
             this.PullRequestSystem = new FakePullRequestSystem(this.Log);
             this.Settings =
-                new ReportCodeAnalysisIssuesToPullRequestSettings(
+                new ReportIssuesToPullRequestSettings(
                     new Core.IO.DirectoryPath(@"c:\Source\Cake.Prca"));
         }
 
@@ -24,7 +24,7 @@
 
         public FakePullRequestSystem PullRequestSystem { get; set; }
 
-        public ReportCodeAnalysisIssuesToPullRequestSettings Settings { get; set; }
+        public ReportIssuesToPullRequestSettings Settings { get; set; }
 
         public PrcaResult RunOrchestrator()
         {
