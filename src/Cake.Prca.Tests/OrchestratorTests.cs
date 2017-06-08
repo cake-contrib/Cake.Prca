@@ -835,6 +835,60 @@
                 result.PostedIssues.Count().ShouldBe(1);
                 result.PostedIssues.ShouldContain(postedIssue);
             }
+
+            [Fact]
+            public void Should_Return_Reported_Issues_If_PullRequestSystem_Could_Not_Be_Initialized()
+            {
+                // Given
+                var firstIssue =
+                    new CodeAnalysisIssue(
+                        @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                        10,
+                        "Foo",
+                        0,
+                        "Foo",
+                        "Foo");
+                var secondIssue =
+                    new CodeAnalysisIssue(
+                        @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                        10,
+                        "Foo",
+                        0,
+                        "Foo",
+                        "Foo");
+                var fixture = new PrcaFixture();
+                fixture.CodeAnalysisProviders.Clear();
+                fixture.CodeAnalysisProviders.Add(
+                    new FakeCodeAnalysisProvider(
+                        fixture.Log,
+                        new List<ICodeAnalysisIssue>
+                        {
+                            firstIssue, secondIssue
+                        }));
+
+                fixture.PullRequestSystem =
+                    new FakePullRequestSystem(
+                        fixture.Log,
+                        new List<IPrcaDiscussionThread>(),
+                        new List<FilePath>
+                        {
+                            new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
+                        })
+                    {
+                        ShouldFailOnInitialization = true
+                    };
+
+                fixture.Settings.MaxIssuesToPost = 1;
+
+                // When
+                var result = fixture.RunOrchestrator();
+
+                // Then
+                result.ReportedIssues.Count().ShouldBe(2);
+                result.ReportedIssues.ShouldContain(firstIssue);
+                result.ReportedIssues.ShouldContain(secondIssue);
+                result.PostedIssues.Count().ShouldBe(0);
+            }
         }
     }
 }
