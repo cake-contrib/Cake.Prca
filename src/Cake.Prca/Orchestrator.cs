@@ -17,7 +17,7 @@
         private readonly ICakeLog log;
         private readonly List<ICodeAnalysisProvider> codeAnalysisProviders = new List<ICodeAnalysisProvider>();
         private readonly IPullRequestSystem pullRequestSystem;
-        private readonly ReportCodeAnalysisIssuesToPullRequestSettings settings;
+        private readonly ReportIssuesToPullRequestSettings settings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Orchestrator"/> class.
@@ -30,7 +30,7 @@
             ICakeLog log,
             IEnumerable<ICodeAnalysisProvider> codeAnalysisProviders,
             IPullRequestSystem pullRequestSystem,
-            ReportCodeAnalysisIssuesToPullRequestSettings settings)
+            ReportIssuesToPullRequestSettings settings)
         {
             log.NotNull(nameof(log));
             pullRequestSystem.NotNull(nameof(pullRequestSystem));

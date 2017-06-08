@@ -77,7 +77,7 @@
     <Compile Include="PullRequests\IPrcaDiscussionThread.cs" />
     <Compile Include="PullRequests\IPullRequestSystem.cs" />
     <Compile Include="PullRequests\PullRequestSystem.cs" />
-    <Compile Include="ReportCodeAnalysisIssuesToPullRequestSettings.cs" />
+    <Compile Include="ReportIssuesToPullRequestSettings.cs" />
     <Compile Include="ValidatedNotNullAttribute.cs" />
   </ItemGroup>
   <ItemGroup>

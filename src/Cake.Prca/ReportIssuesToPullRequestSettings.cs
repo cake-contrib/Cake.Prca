@@ -1,18 +1,17 @@
 ﻿namespace Cake.Prca
 {
-    using System.IO;
     using Core.IO;
 
     /// <summary>
     /// Settings affecting how code analysis issues are reported to pull requests.
     /// </summary>
-    public class ReportCodeAnalysisIssuesToPullRequestSettings
+    public class ReportIssuesToPullRequestSettings
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReportCodeAnalysisIssuesToPullRequestSettings"/> class.
+        /// Initializes a new instance of the <see cref="ReportIssuesToPullRequestSettings"/> class.
         /// </summary>
         /// <param name="repositoryRoot">Root path of the repository.</param>
-        public ReportCodeAnalysisIssuesToPullRequestSettings(DirectoryPath repositoryRoot)
+        public ReportIssuesToPullRequestSettings(DirectoryPath repositoryRoot)
         {
             repositoryRoot.NotNull(nameof(repositoryRoot));
 

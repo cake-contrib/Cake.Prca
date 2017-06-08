@@ -12,7 +12,7 @@
         /// </summary>
         /// <param name="settings">General settings</param>
         /// <returns><c>true</c> if the initialization was successful, <c>false</c> otherwise.</returns>
-        bool Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings);
+        bool Initialize(ReportIssuesToPullRequestSettings settings);
 
         /// <summary>
         /// Gets all code analysis issues.

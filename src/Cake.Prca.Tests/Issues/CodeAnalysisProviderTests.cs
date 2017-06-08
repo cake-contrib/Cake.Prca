@@ -52,7 +52,7 @@
             {
                 // Given
                 var provider = new FakeCodeAnalysisProvider(new FakeLog());
-                var settings = new ReportCodeAnalysisIssuesToPullRequestSettings(@"c:\foo");
+                var settings = new ReportIssuesToPullRequestSettings(@"c:\foo");
 
                 // When
                 provider.Initialize(settings);
@@ -66,7 +66,7 @@
             {
                 // Given
                 var provider = new FakeCodeAnalysisProvider(new FakeLog());
-                var settings = new ReportCodeAnalysisIssuesToPullRequestSettings(@"c:\foo");
+                var settings = new ReportIssuesToPullRequestSettings(@"c:\foo");
 
                 // When
                 var result = provider.Initialize(settings);
