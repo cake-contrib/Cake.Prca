@@ -25,7 +25,7 @@
 
         public new ICakeLog Log => base.Log;
 
-        public new ReportIssuesToPullRequestSettings PrcaSettings => base.PrcaSettings;
+        public new PrcaSettings PrcaSettings => base.PrcaSettings;
 
         public PrcaCommentFormat Format { get; private set; }
 
