@@ -29,10 +29,10 @@
         /// Gets general settings.
         /// Is set after <see cref="Initialize"/> was called from the core addin.
         /// </summary>
-        protected ReportIssuesToPullRequestSettings PrcaSettings { get; private set; }
+        protected PrcaSettings PrcaSettings { get; private set; }
 
         /// <inheritdoc/>
-        public virtual bool Initialize(ReportIssuesToPullRequestSettings settings)
+        public virtual bool Initialize(PrcaSettings settings)
         {
             settings.NotNull(nameof(settings));
 

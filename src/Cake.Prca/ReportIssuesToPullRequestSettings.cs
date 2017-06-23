@@ -5,23 +5,16 @@
     /// <summary>
     /// Settings affecting how code analysis issues are reported to pull requests.
     /// </summary>
-    public class ReportIssuesToPullRequestSettings
+    public class ReportIssuesToPullRequestSettings : PrcaSettings
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ReportIssuesToPullRequestSettings"/> class.
         /// </summary>
         /// <param name="repositoryRoot">Root path of the repository.</param>
         public ReportIssuesToPullRequestSettings(DirectoryPath repositoryRoot)
+            : base(repositoryRoot)
         {
-            repositoryRoot.NotNull(nameof(repositoryRoot));
-
-            this.RepositoryRoot = repositoryRoot;
         }
-
-        /// <summary>
-        /// Gets the Root path of the repository.
-        /// </summary>
-        public DirectoryPath RepositoryRoot { get; private set; }
 
         /// <summary>
         /// Gets or sets the number of issues which should be posted at maximum.
