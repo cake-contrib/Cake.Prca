@@ -4,7 +4,7 @@
     using Shouldly;
     using Xunit;
 
-    public sealed class ReportIssuesToPullRequestSettingsTests
+    public sealed class ReadIssuesSettingsTests
     {
         public sealed class TheCtor
         {
@@ -15,7 +15,7 @@
                 DirectoryPath repoRoot = null;
 
                 // When
-                var result = Record.Exception(() => new ReportIssuesToPullRequestSettings(repoRoot));
+                var result = Record.Exception(() => new ReadIssuesSettings(repoRoot));
 
                 // Then
                 result.IsArgumentNullException("repositoryRoot");
@@ -28,7 +28,7 @@
                 DirectoryPath repoRoot = @"c:\repo";
 
                 // When
-                var settings = new ReportIssuesToPullRequestSettings(repoRoot);
+                var settings = new ReadIssuesSettings(repoRoot);
 
                 // Then
                 settings.RepositoryRoot.ShouldBe(repoRoot);

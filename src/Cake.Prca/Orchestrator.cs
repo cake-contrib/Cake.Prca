@@ -24,7 +24,8 @@
         /// </summary>
         /// <param name="log">Cake log instance.</param>
         /// <param name="codeAnalysisProviders">List of code analysis issue providers to use.</param>
-        /// <param name="pullRequestSystem">Object for accessing pull request system.</param>
+        /// <param name="pullRequestSystem">Object for accessing pull request system.
+        /// <c>null</c> if only issues should be read.</param>
         /// <param name="settings">Settings.</param>
         public Orchestrator(
             ICakeLog log,
@@ -70,26 +71,9 @@
                 this.log.Warning("Error initializing the pull request system.");
             }
 
-            // Initialize issue providers and read issues.
-            var issues = new List<ICodeAnalysisIssue>();
-            foreach (var codeAnalysisProvider in this.codeAnalysisProviders)
-            {
-                this.log.Verbose("Initialize code analysis provider {0}...", codeAnalysisProvider.GetType().Name);
-                if (codeAnalysisProvider.Initialize(this.settings))
-                {
-                    this.log.Verbose("Reading issues from {0}...", codeAnalysisProvider.GetType().Name);
-                    var currentIssues = codeAnalysisProvider.ReadIssues(format).ToList();
-                    this.log.Verbose(
-                        "Found {0} issues using issue provider {1}...",
-                        currentIssues.Count,
-                        codeAnalysisProvider.GetType().Name);
-                    issues.AddRange(currentIssues);
-                }
-                else
-                {
-                    this.log.Warning("Error initializing issue provider {0}.", codeAnalysisProvider.GetType().Name);
-                }
-            }
+            var issueReader =
+                new IssueReader(this.log, this.codeAnalysisProviders, this.settings);
+            var issues = issueReader.ReadIssues(format).ToList();
 
             // Don't process issues if pull request system could not be initialized.
             if (!pullRequestSystemInitialized)
@@ -98,7 +82,7 @@
             }
 
             this.log.Information("Processing {0} new issues", issues.Count);
-            var postedIssues = this.PostAndResolveComments(issues);
+            var postedIssues = this.PostAndResolveComments(this.settings, issues);
 
             return new PrcaResult(issues, postedIssues);
         }
@@ -124,17 +108,26 @@
         /// Posts new issues, ignoring duplicate comments and resolves comments that were open in an old iteration
         /// of the pull request.
         /// </summary>
+        /// <param name="reportIssuesToPullRequestSettings">Settings for posting the issues.</param>
         /// <param name="issues">Issues to post.</param>
         /// <returns>Issues reported to the pull request.</returns>
-        private IEnumerable<ICodeAnalysisIssue> PostAndResolveComments(IList<ICodeAnalysisIssue> issues)
+        private IEnumerable<ICodeAnalysisIssue> PostAndResolveComments(
+            ReportIssuesToPullRequestSettings reportIssuesToPullRequestSettings,
+            IList<ICodeAnalysisIssue> issues)
         {
             issues.NotNull(nameof(issues));
 
             this.log.Information("Fetching existing threads and comments...");
 
-            var existingThreads = this.pullRequestSystem.FetchActiveDiscussionThreads(this.settings.CommentSource).ToList();
+            var existingThreads =
+                this.pullRequestSystem.FetchActiveDiscussionThreads(
+                    reportIssuesToPullRequestSettings.CommentSource).ToList();
 
-            var issueComments = this.BuildIssueToCommentDictonary(issues, existingThreads);
+            var issueComments =
+                this.BuildIssueToCommentDictonary(
+                    reportIssuesToPullRequestSettings,
+                    issues,
+                    existingThreads);
 
             // Comments that were created by this logic but do not have corresponding issues can be marked as 'Resolved'
             this.ResolveExistingComments(existingThreads, issueComments);
@@ -146,7 +139,8 @@
             }
 
             // Remove issues that cannot be posted
-            var issueFilterer = new IssueFilterer(this.log, this.pullRequestSystem, this.settings);
+            var issueFilterer =
+                new IssueFilterer(this.log, this.pullRequestSystem, reportIssuesToPullRequestSettings);
             var remainingIssues = issueFilterer.FilterIssues(issues, issueComments).ToList();
 
             if (remainingIssues.Any())
@@ -166,7 +160,9 @@
                     remainingIssues.Count,
                     string.Join(Environment.NewLine, formattedMessages));
 
-                this.pullRequestSystem.PostDiscussionThreads(remainingIssues, this.settings.CommentSource);
+                this.pullRequestSystem.PostDiscussionThreads(
+                    remainingIssues,
+                    reportIssuesToPullRequestSettings.CommentSource);
             }
             else
             {
@@ -179,10 +175,12 @@
         /// <summary>
         /// Returns existing matching comments from the pull request for a list of issues.
         /// </summary>
+        /// <param name="reportIssuesToPullRequestSettings">Settings to use.</param>
         /// <param name="issues">Issues for which matching comments should be found.</param>
         /// <param name="existingThreads">Existing discussion threads on the pull request.</param>
         /// <returns>Dictionary containing issues and its associated matching comments on the pull request.</returns>
         private IDictionary<ICodeAnalysisIssue, IEnumerable<IPrcaDiscussionComment>> BuildIssueToCommentDictonary(
+            ReportIssuesToPullRequestSettings reportIssuesToPullRequestSettings,
             IList<ICodeAnalysisIssue> issues,
             IList<IPrcaDiscussionThread> existingThreads)
         {
@@ -195,7 +193,11 @@
             var result = new Dictionary<ICodeAnalysisIssue, IEnumerable<IPrcaDiscussionComment>>();
             foreach (var issue in issues)
             {
-                var matchingComments = this.GetMatchingComments(issue, existingThreads).ToList();
+                var matchingComments =
+                    this.GetMatchingComments(
+                        reportIssuesToPullRequestSettings,
+                        issue,
+                        existingThreads).ToList();
 
                 if (matchingComments.Any())
                 {
@@ -219,10 +221,12 @@
         /// <remarks>
         /// The line cannot be used since comments can move around.
         /// </remarks>
+        /// <param name="reportIssuesToPullRequestSettings">Settings to use.</param>
         /// <param name="issue">Issue for which the comments should be returned.</param>
         /// <param name="existingThreads">Existing discussion threads on the pull request.</param>
         /// <returns>Active comments for the issue.</returns>
         private IEnumerable<IPrcaDiscussionComment> GetMatchingComments(
+            ReportIssuesToPullRequestSettings reportIssuesToPullRequestSettings,
             ICodeAnalysisIssue issue,
             IList<IPrcaDiscussionThread> existingThreads)
         {
@@ -236,7 +240,7 @@
                     thread != null &&
                     thread.Status == PrcaDiscussionStatus.Active &&
                     FilePathsAreMatching(issue, thread) &&
-                    thread.CommentSource == this.settings.CommentSource
+                    thread.CommentSource == reportIssuesToPullRequestSettings.CommentSource
                 select thread).ToList();
 
             if (matchingThreads.Any())
