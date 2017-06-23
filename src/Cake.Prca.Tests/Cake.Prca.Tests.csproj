@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="FakeRuleUrlResolver.cs" />
     <Compile Include="FakeRuleDescription.cs" />
+    <Compile Include="IssueReaderTests.cs" />
     <Compile Include="Issues\CodeAnalysisIssueOfTTests.cs" />
     <Compile Include="Issues\CodeAnalysisProviderTests.cs" />
     <Compile Include="ExceptionAssertExtensions.cs" />
@@ -87,10 +88,13 @@
     <Compile Include="PrcaArgumentChecksTests.cs" />
     <Compile Include="PrcaFixture.cs" />
     <Compile Include="PrcaResultTests.cs" />
+    <Compile Include="PrcaSettingsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Issues\StringPathExtensionsTests.cs" />
     <Compile Include="PullRequests\PrcaDiscussionThreadTests.cs" />
     <Compile Include="PullRequests\PullRequestSystemTests.cs" />
+    <Compile Include="ReadIssuesSettingsTests.cs" />
+    <Compile Include="ReportIssuesToPullRequestSettingsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cake.Prca\Cake.Prca.csproj">

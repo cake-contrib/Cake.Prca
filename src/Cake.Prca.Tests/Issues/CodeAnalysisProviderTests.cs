@@ -52,13 +52,27 @@
             {
                 // Given
                 var provider = new FakeCodeAnalysisProvider(new FakeLog());
-                var settings = new ReportCodeAnalysisIssuesToPullRequestSettings(@"c:\foo");
+                var settings = new ReportIssuesToPullRequestSettings(@"c:\foo");
 
                 // When
                 provider.Initialize(settings);
 
                 // Then
                 provider.PrcaSettings.ShouldBe(settings);
+            }
+
+            [Fact]
+            public void Should_Return_True()
+            {
+                // Given
+                var provider = new FakeCodeAnalysisProvider(new FakeLog());
+                var settings = new ReportIssuesToPullRequestSettings(@"c:\foo");
+
+                // When
+                var result = provider.Initialize(settings);
+
+                // Then
+                result.ShouldBe(true);
             }
         }
 

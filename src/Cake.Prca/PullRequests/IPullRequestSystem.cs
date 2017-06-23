@@ -14,7 +14,8 @@
         /// Initializes the code analysis provider.
         /// </summary>
         /// <param name="settings">General settings</param>
-        void Initialize(ReportCodeAnalysisIssuesToPullRequestSettings settings);
+        /// <returns><c>true</c> if the initialization was successful, <c>false</c> otherwise.</returns>
+        bool Initialize(ReportIssuesToPullRequestSettings settings);
 
         /// <summary>
         /// Returns the preferred format for pull request comments.

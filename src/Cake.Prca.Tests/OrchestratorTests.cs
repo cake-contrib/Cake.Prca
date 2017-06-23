@@ -134,73 +134,6 @@
             }
 
             [Fact]
-            public void Should_Initialize_Code_Analysis_Provider()
-            {
-                // Given
-                var fixture = new PrcaFixture();
-
-                // When
-                fixture.RunOrchestrator();
-
-                // Then
-                fixture.CodeAnalysisProviders.ShouldAllBe(x => x.PrcaSettings == fixture.Settings);
-            }
-
-            [Fact]
-            public void Should_Initialize_All_Code_Analysis_Provider()
-            {
-                // Given
-                var fixture = new PrcaFixture();
-                fixture.CodeAnalysisProviders.Clear();
-                fixture.CodeAnalysisProviders.Add(
-                    new FakeCodeAnalysisProvider(
-                        fixture.Log,
-                        new List<ICodeAnalysisIssue>
-                        {
-                            new CodeAnalysisIssue(
-                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
-                                10,
-                                "Foo",
-                                0,
-                                "Foo",
-                                "Foo"),
-                            new CodeAnalysisIssue(
-                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
-                                12,
-                                "Bar",
-                                0,
-                                "Bar",
-                                "Bar")
-                        }));
-                fixture.CodeAnalysisProviders.Add(
-                    new FakeCodeAnalysisProvider(
-                        fixture.Log,
-                        new List<ICodeAnalysisIssue>
-                        {
-                            new CodeAnalysisIssue(
-                                @"src\Cake.Prca.Tests\Foo.cs",
-                                5,
-                                "Foo",
-                                0,
-                                "Foo",
-                                "Foo"),
-                            new CodeAnalysisIssue(
-                                @"src\Cake.Prca.Tests\Bar.cs",
-                                7,
-                                "Bar",
-                                0,
-                                "Bar",
-                                "Bar")
-                        }));
-
-                // When
-                fixture.RunOrchestrator();
-
-                // Then
-                fixture.CodeAnalysisProviders.ShouldAllBe(x => x.PrcaSettings == fixture.Settings);
-            }
-
-            [Fact]
             public void Should_Initialize_Pull_Request_System()
             {
                 // Given
@@ -211,128 +144,6 @@
 
                 // Then
                 fixture.PullRequestSystem.PrcaSettings.ShouldBe(fixture.Settings);
-            }
-
-            [Fact]
-            public void Should_Read_Correct_Number_Of_Code_Analysis_Issues()
-            {
-                // Given
-                var fixture = new PrcaFixture();
-                fixture.CodeAnalysisProviders.Clear();
-                fixture.CodeAnalysisProviders.Add(
-                    new FakeCodeAnalysisProvider(
-                        fixture.Log,
-                        new List<ICodeAnalysisIssue>
-                        {
-                            new CodeAnalysisIssue(
-                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
-                                10,
-                                "Foo",
-                                0,
-                                "Foo",
-                                "Foo"),
-                            new CodeAnalysisIssue(
-                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
-                                12,
-                                "Bar",
-                                0,
-                                "Bar",
-                                "Bar")
-                        }));
-
-                // When
-                fixture.RunOrchestrator();
-
-                // Then
-                fixture.Log.Entries.ShouldContain(x => x.Message == "Processing 2 new issues");
-            }
-
-            [Fact]
-            public void Should_Read_Correct_Number_Of_Code_Analysis_Issues_Not_Related_To_A_File()
-            {
-                // Given
-                var fixture = new PrcaFixture();
-                fixture.CodeAnalysisProviders.Clear();
-                fixture.CodeAnalysisProviders.Add(
-                    new FakeCodeAnalysisProvider(
-                        fixture.Log,
-                        new List<ICodeAnalysisIssue>
-                        {
-                            new CodeAnalysisIssue(
-                                null,
-                                null,
-                                "Foo",
-                                0,
-                                "Foo",
-                                "Foo"),
-                            new CodeAnalysisIssue(
-                                null,
-                                null,
-                                "Bar",
-                                0,
-                                "Bar",
-                                "Bar")
-                        }));
-
-                // When
-                fixture.RunOrchestrator();
-
-                // Then
-                fixture.Log.Entries.ShouldContain(x => x.Message == "Processing 2 new issues");
-            }
-
-            [Fact]
-            public void Should_Read_Correct_Number_Of_Code_Analysis_Issues_From_Multiple_Providers()
-            {
-                // Given
-                var fixture = new PrcaFixture();
-                fixture.CodeAnalysisProviders.Clear();
-                fixture.CodeAnalysisProviders.Add(
-                    new FakeCodeAnalysisProvider(
-                        fixture.Log,
-                        new List<ICodeAnalysisIssue>
-                        {
-                            new CodeAnalysisIssue(
-                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
-                                10,
-                                "Foo",
-                                0,
-                                "Foo",
-                                "Foo"),
-                            new CodeAnalysisIssue(
-                                @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
-                                12,
-                                "Bar",
-                                0,
-                                "Bar",
-                                "Bar")
-                        }));
-                fixture.CodeAnalysisProviders.Add(
-                    new FakeCodeAnalysisProvider(
-                        fixture.Log,
-                        new List<ICodeAnalysisIssue>
-                        {
-                            new CodeAnalysisIssue(
-                                @"src\Cake.Prca.Tests\Foo.cs",
-                                5,
-                                "Foo",
-                                0,
-                                "Foo",
-                                "Foo"),
-                            new CodeAnalysisIssue(
-                                @"src\Cake.Prca.Tests\Bar.cs",
-                                7,
-                                "Bar",
-                                0,
-                                "Bar",
-                                "Bar")
-                        }));
-
-                // When
-                fixture.RunOrchestrator();
-
-                // Then
-                fixture.Log.Entries.ShouldContain(x => x.Message == "Processing 4 new issues");
             }
 
             [Fact]
@@ -424,7 +235,7 @@
                                     }
                                 })
                             {
-                                CommentSource = fixture.Settings.CommentSource,
+                                CommentSource = fixture.ReportIssuesToPullRequestSettings.CommentSource,
                             }
                         },
                         new List<FilePath>
@@ -485,7 +296,7 @@
                                     }
                                 })
                             {
-                                CommentSource = fixture.Settings.CommentSource,
+                                CommentSource = fixture.ReportIssuesToPullRequestSettings.CommentSource,
                             }
                         },
                         new List<FilePath>
@@ -591,7 +402,7 @@
                             new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
                         });
 
-                fixture.Settings.MaxIssuesToPost = 1;
+                fixture.ReportIssuesToPullRequestSettings.MaxIssuesToPost = 1;
 
                 // When
                 fixture.RunOrchestrator();
@@ -823,7 +634,7 @@
                             new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
                         });
 
-                fixture.Settings.MaxIssuesToPost = 1;
+                fixture.ReportIssuesToPullRequestSettings.MaxIssuesToPost = 1;
 
                 // When
                 var result = fixture.RunOrchestrator();
@@ -834,6 +645,60 @@
                 result.ReportedIssues.ShouldContain(postedIssue);
                 result.PostedIssues.Count().ShouldBe(1);
                 result.PostedIssues.ShouldContain(postedIssue);
+            }
+
+            [Fact]
+            public void Should_Return_Reported_Issues_If_PullRequestSystem_Could_Not_Be_Initialized()
+            {
+                // Given
+                var firstIssue =
+                    new CodeAnalysisIssue(
+                        @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                        10,
+                        "Foo",
+                        0,
+                        "Foo",
+                        "Foo");
+                var secondIssue =
+                    new CodeAnalysisIssue(
+                        @"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs",
+                        10,
+                        "Foo",
+                        0,
+                        "Foo",
+                        "Foo");
+                var fixture = new PrcaFixture();
+                fixture.CodeAnalysisProviders.Clear();
+                fixture.CodeAnalysisProviders.Add(
+                    new FakeCodeAnalysisProvider(
+                        fixture.Log,
+                        new List<ICodeAnalysisIssue>
+                        {
+                            firstIssue, secondIssue
+                        }));
+
+                fixture.PullRequestSystem =
+                    new FakePullRequestSystem(
+                        fixture.Log,
+                        new List<IPrcaDiscussionThread>(),
+                        new List<FilePath>
+                        {
+                            new FilePath(@"src\Cake.Prca.Tests\FakeCodeAnalysisProvider.cs")
+                        })
+                    {
+                        ShouldFailOnInitialization = true
+                    };
+
+                fixture.ReportIssuesToPullRequestSettings.MaxIssuesToPost = 1;
+
+                // When
+                var result = fixture.RunOrchestrator();
+
+                // Then
+                result.ReportedIssues.Count().ShouldBe(2);
+                result.ReportedIssues.ShouldContain(firstIssue);
+                result.ReportedIssues.ShouldContain(secondIssue);
+                result.PostedIssues.Count().ShouldBe(0);
             }
         }
     }

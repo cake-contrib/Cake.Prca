@@ -55,13 +55,27 @@
             {
                 // Given
                 var prSystem = new FakePullRequestSystem(new FakeLog());
-                var settings = new ReportCodeAnalysisIssuesToPullRequestSettings(@"c:\foo");
+                var settings = new ReportIssuesToPullRequestSettings(@"c:\foo");
 
                 // When
                 prSystem.Initialize(settings);
 
                 // Then
                 prSystem.PrcaSettings.ShouldBe(settings);
+            }
+
+            [Fact]
+            public void Should_Return_True()
+            {
+                // Given
+                var prSystem = new FakePullRequestSystem(new FakeLog());
+                var settings = new ReportIssuesToPullRequestSettings(@"c:\foo");
+
+                // When
+                var result = prSystem.Initialize(settings);
+
+                // Then
+                result.ShouldBe(true);
             }
         }
 

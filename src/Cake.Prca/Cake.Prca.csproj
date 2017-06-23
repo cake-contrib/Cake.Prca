@@ -54,10 +54,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CakeAliasConstants.cs" />
+    <Compile Include="IssueReader.cs" />
     <Compile Include="Issues\BaseRuleDescription.cs" />
     <Compile Include="Issues\BaseRuleUrlResolver.cs" />
     <Compile Include="Issues\CodeAnalysisIssue{T}.cs" />
     <Compile Include="Issues\StringPathExtensions.cs" />
+    <Compile Include="PrcaAliases.ReadIssues.cs" />
+    <Compile Include="PrcaAliases.ReportIssuesToPullRequest.cs" />
     <Compile Include="PrcaArgumentChecks.cs" />
     <Compile Include="Issues\CodeAnalysisIssue.cs" />
     <Compile Include="Issues\CodeAnalysisProvider.cs" />
@@ -77,7 +80,9 @@
     <Compile Include="PullRequests\IPrcaDiscussionThread.cs" />
     <Compile Include="PullRequests\IPullRequestSystem.cs" />
     <Compile Include="PullRequests\PullRequestSystem.cs" />
-    <Compile Include="ReportCodeAnalysisIssuesToPullRequestSettings.cs" />
+    <Compile Include="PrcaSettings.cs" />
+    <Compile Include="ReadIssuesSettings.cs" />
+    <Compile Include="ReportIssuesToPullRequestSettings.cs" />
     <Compile Include="ValidatedNotNullAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
